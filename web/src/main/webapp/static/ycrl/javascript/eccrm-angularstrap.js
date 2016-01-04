@@ -279,10 +279,43 @@
                             }
                         }, 50)
                     });
+                },
+                /**
+                 * 创建一个弹出层
+                 * {
+                 * url:'',              // 必须，弹出层所引用的HTML的地址
+                 * scope:null,          // 可选
+                 * backdrop:'static',   // 可选，点击非弹出层时，是否关闭当前弹出层
+                 * callback:$.noop      // 可选，成功创建弹出层后的回调，this为弹出层对象，接收一个scope参数
+                 * }
+                 * @param options
+                 * @param callback
+                 */
+                create: function (options, callback) {
+                    // 初始化参数
+                    options = options || {};
+                    if (!options.template) {
+                        var message = '创建弹出层失败!没有获得URL地址或模板内容!';
+                        alert(message);
+                        throw message;
+                    }
+                    var config = {
+                        template: options.template,
+                        scope: options.scope || null,
+                        backdrop: options.backdrop || 'static'
+                    };
+
+                    // 创建弹出层
+                    var modal = $modal(config);
+                    var scope = modal.$scope;
+
+                    // 弹出层创建成功后的回调
+                    callback = callback || options.callback;
+                    angular.isFunction(callback) && callback.call(modal, scope)
                 }
 
 
-            }
+            };
         }]);
 
     angular.module('eccrm.angularstrap.aside', ['mgcrea.ngStrap', 'eccrm.angular'])
@@ -632,11 +665,11 @@
                 }
             };
         }])
-    /**
-     * 用于在指定表单元素验证失败时，给当前元素的子元素添加error属性
-     * 需要依赖的样式：[validate-error] .error{ // 验证失败时需要显示的样式 }
-     * 用法：<label validate-error="form.property">姓名:</label>
-     */
+        /**
+         * 用于在指定表单元素验证失败时，给当前元素的子元素添加error属性
+         * 需要依赖的样式：[validate-error] .error{ // 验证失败时需要显示的样式 }
+         * 用法：<label validate-error="form.property">姓名:</label>
+         */
         .directive('validateError', ['$compile', function ($compile) {
             return {
                 restrict: 'A',
