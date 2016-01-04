@@ -10,7 +10,7 @@
 			http://www.springframework.org/schema/aop/spring-aop-3.2.xsd"
         >
 
-    <context:component-scan base-package="eccrm.**,com.wanda.**,com.ycrl.**"/>
+    <context:component-scan base-package="eccrm.**,com.michael.**,com.ycrl.**"/>
     <aop:aspectj-autoproxy/>
 
     <!-- 附件上传的AOP -->

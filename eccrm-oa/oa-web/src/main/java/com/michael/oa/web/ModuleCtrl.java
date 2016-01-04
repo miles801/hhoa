@@ -1,15 +1,18 @@
-package eccrm.base.datadic.web;
+package com.michael.oa.web;
 
-import com.ycrl.core.web.BaseController;
+import com.michael.oa.bo.ModuleBo;
+import com.michael.oa.domain.Module;
+import com.michael.oa.service.ModuleService;
+import com.michael.oa.vo.ModuleVo;
 import com.ycrl.base.common.JspAccessType;
 import com.ycrl.core.pager.PageVo;
+import com.ycrl.core.web.BaseController;
 import com.ycrl.utils.gson.GsonUtils;
-import eccrm.base.datadic.bo.DataDicBo;
-import eccrm.base.datadic.domain.DataDic;
-import eccrm.base.datadic.service.DataDicService;
-import eccrm.base.datadic.vo.DataDicVo;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -19,40 +22,42 @@ import javax.servlet.http.HttpServletResponse;
  * @author Michael
  */
 @Controller
-@RequestMapping(value = {"/base/datadic"})
-public class DataDicCtrl extends BaseController {
+@RequestMapping(value = {"/oa/module"})
+public class ModuleCtrl extends BaseController {
     @Resource
-    private DataDicService dataDicService;
-    @RequestMapping(value = {""}, method=RequestMethod.GET )
+    private ModuleService moduleService;
+
+    @RequestMapping(value = {""}, method = RequestMethod.GET)
     public String toList() {
-        return "base/datadic/datadic_list";
+        return "oa/module/list/module_list";
     }
 
     @RequestMapping(value = "/add", method = RequestMethod.GET)
     public String toAdd(HttpServletRequest request) {
         request.setAttribute(JspAccessType.PAGE_TYPE, JspAccessType.ADD);
-        return "base/datadic/datadic_edit";
+        return "oa/module/edit/module_edit";
     }
 
     @RequestMapping(value = "/save", method = RequestMethod.POST)
     @ResponseBody
     public void save(HttpServletRequest request, HttpServletResponse response) {
-        DataDic dataDic = GsonUtils.wrapDataToEntity(request, DataDic.class);
-        dataDicService.save(dataDic);
+        Module module = GsonUtils.wrapDataToEntity(request, Module.class);
+        moduleService.save(module);
         GsonUtils.printSuccess(response);
     }
+
     @RequestMapping(value = "/modify", params = {"id"}, method = RequestMethod.GET)
     public String toModify(@RequestParam String id, HttpServletRequest request) {
         request.setAttribute(JspAccessType.PAGE_TYPE, JspAccessType.MODIFY);
         request.setAttribute("id", id);
-        return "base/datadic/datadic_edit";
+        return "oa/module/edit/module_edit";
     }
 
     @RequestMapping(value = "/update", method = RequestMethod.POST)
     @ResponseBody
     public void update(HttpServletRequest request, HttpServletResponse response) {
-        DataDic dataDic = GsonUtils.wrapDataToEntity(request, DataDic.class);
-        dataDicService.update(dataDic);
+        Module module = GsonUtils.wrapDataToEntity(request, Module.class);
+        moduleService.update(module);
         GsonUtils.printSuccess(response);
     }
 
@@ -60,27 +65,21 @@ public class DataDicCtrl extends BaseController {
     public String toDetail(@RequestParam String id, HttpServletRequest request) {
         request.setAttribute(JspAccessType.PAGE_TYPE, JspAccessType.DETAIL);
         request.setAttribute("id", id);
-        return "base/datadic/datadic_edit";
+        return "oa/module/edit/module_edit";
     }
 
     @ResponseBody
     @RequestMapping(value = "/get", params = {"id"}, method = RequestMethod.GET)
     public void findById(@RequestParam String id, HttpServletResponse response) {
-        DataDicVo vo = dataDicService.detail(id);
-        GsonUtils.printData(response, vo);
-    }
-    @ResponseBody
-    @RequestMapping(value = "/findByCode", params = {"code"}, method = RequestMethod.GET)
-    public void findByCode(@RequestParam String code, HttpServletResponse response) {
-        DataDicVo vo = dataDicService.findByCode(code);
+        ModuleVo vo = moduleService.findById(id);
         GsonUtils.printData(response, vo);
     }
 
     @ResponseBody
     @RequestMapping(value = "/pageQuery", method = RequestMethod.POST)
     public void pageQuery(HttpServletRequest request, HttpServletResponse response) {
-        DataDicBo bo = GsonUtils.wrapDataToEntity(request, DataDicBo.class);
-        PageVo pageVo = dataDicService.pageQuery(bo);
+        ModuleBo bo = GsonUtils.wrapDataToEntity(request, ModuleBo.class);
+        PageVo pageVo = moduleService.pageQuery(bo);
         GsonUtils.printData(response, pageVo);
     }
 
@@ -88,7 +87,7 @@ public class DataDicCtrl extends BaseController {
     @RequestMapping(value = "/delete", params = {"ids"}, method = RequestMethod.DELETE)
     public void deleteByIds(@RequestParam String ids, HttpServletResponse response) {
         String[] idArr = ids.split(",");
-        dataDicService.deleteByIds(idArr);
+        moduleService.deleteByIds(idArr);
         GsonUtils.printSuccess(response);
     }
 
