@@ -1,5 +1,8 @@
 package com.ycrl.base.common;
 
+import org.hibernate.validator.constraints.Length;
+
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 /**
@@ -7,16 +10,26 @@ import java.util.Date;
  * Created by Michael on 2014/10/17.
  */
 public class CommonDomain {
+    @NotNull
+    @Length(max = 40)
     private String id;
+    @Length(max = 40)
     private String creatorId;
+    @Length(max = 50)
     private String creatorName;
+    @Length(max = 40)
     private String modifierId;
+    @Length(max = 50)
     private String modifierName;
     private Date createdDatetime;
     private Date modifiedDatetime;
+    @Length(max = 40)
     private String status;
+    @Length(max = 1000)
     private String description;
+    @Length(max = 40)
     private String tenementId;
+
     public String getId() {
         return id;
     }

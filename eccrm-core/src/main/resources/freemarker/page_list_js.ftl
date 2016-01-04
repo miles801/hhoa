@@ -2,10 +2,10 @@
 * Created by ${author!'CODE GENERATOR'} <#if current??>on ${current}</#if>.
 */
 (function (window, angular, $) {
-    var app = angular.module('eccrm.${name}.${entity}.list', [
+    var app = angular.module('${name}.${entity}.list', [
         'eccrm.angular',
         'eccrm.angularstrap',
-        'eccrm.${name}.${entity}'
+        '${name}.${entity}'
     ]);
     app.controller('Ctrl', function ($scope, CommonUtils, ${className}Service) {
         $scope.condition = { };

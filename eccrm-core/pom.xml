@@ -86,6 +86,14 @@
             <artifactId>licence</artifactId>
             <version>1.1</version>
         </dependency>
+
+        <!-- 代码生成器 -->
+        <dependency>
+            <groupId>com.ycrl.thirdparty</groupId>
+            <artifactId>utils-cg</artifactId>
+            <version>1.0.1</version>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 
 </project>

@@ -5,24 +5,22 @@
 %>
 <html lang="en" >
 <head >
-    <title >${cnName}</title >
+    <title>${cnName}</title>
     <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE8" />
-    <link rel="stylesheet" type="text/css" href="<%=contextPath%>/vendor/bootstrap-v3.0/css/bootstrap.min.css" >
-    <link rel="stylesheet" type="text/css" href="<%=contextPath%>/style/standard/css/eccrm-common-new.css" >
-    <script type="text/javascript" src="<%=contextPath%>/static/ycrl/javascript/jquery-all.js" ></script >
-    <script type="text/javascript" src="<%=contextPath%>/static/ycrl/javascript/angular-all.js" ></script >
-    <script type="text/javascript" src="<%=contextPath%>/static/ycrl/javascript/angular-strap-all.js" ></script >
+    <link rel="stylesheet" type="text/css" href="<%=contextPath%>/vendor/bootstrap-v3.0/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="<%=contextPath%>/style/standard/css/eccrm-common-new.css">
+    <script type="text/javascript" src="<%=contextPath%>/static/ycrl/javascript/jquery-all.js" ></script>
+    <script type="text/javascript" src="<%=contextPath%>/static/ycrl/javascript/angular-all.js" ></script>
+    <script type="text/javascript" src="<%=contextPath%>/static/ycrl/javascript/angular-strap-all.js" ></script>
     <#if listPage.datepicker!false = true>
-        <script type="text/javascript" src="<%=contextPath%>/vendor/My97DatePicker/WdatePicker.js" ></script >
+        <script type="text/javascript" src="<%=contextPath%>/vendor/My97DatePicker/WdatePicker.js" ></script>
     </#if>
-    <script >
+    <script>
         window.angular.contextPathURL = '<%=contextPath%>';
-    </script >
+    </script>
 </head >
 <body >
-<div class="main <#if listPage.conditionRows??>condition-row-<#if listPage.conditionRows &gt; 3 >3<#else>${listPage.conditionRows}</#if></#if>" ng-app="eccrm.${name}.${entity}.list"
-     ng-controller="Ctrl"
-     <#if listPage.wholePageScroll == true >style="overflow: auto;"</#if>>
+<div class="main <#if listPage.conditionRows??>condition-row-<#if listPage.conditionRows &gt; 3 >3<#else>${listPage.conditionRows}</#if></#if>" ng-app="${name}.${entity}.list" ng-controller="Ctrl" <#if listPage.wholePageScroll == true >style="overflow: auto;"</#if>>
     <#if listPage.queryConditionRows??>
     <div class="list-condition" >
         <div class="block" >
@@ -153,6 +151,6 @@
 </div >
 
 </body >
-<script type="text/javascript" src="<%=contextPath%>/app/${path}/${entity}.js" ></script >
-<script type="text/javascript" src="<%=contextPath%>/app/${path}/list/${entity}_list.js" ></script >
+<script type="text/javascript" src="<%=contextPath%>/app/${path}/${entity}.js" ></script>
+<script type="text/javascript" src="<%=contextPath%>/app/${path}/list/${entity}_list.js" ></script>
 </html >

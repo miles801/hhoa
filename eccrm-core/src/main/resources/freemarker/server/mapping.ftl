@@ -5,7 +5,7 @@
 <hibernate-mapping package="${packagePath}.domain">
     <class name="${entity}" table="${tableName}">
         <id name="id" column="ID" length="40">
-            <generator class="uuid.hex"/>
+            <generator class="uuid"/>
         </id>
 
 
@@ -18,10 +18,6 @@
         <property name="modifierName" column="MODIFIER_NAME" type="string" length="40"/>
         <property name="modifiedDatetime" column="MODIFIED_DATETIME" type="timestamp"/>
         <property name="tenementId" column="TENEMENT_ID" type="string" length="40" update="false"/>
-
-
-
-        <!-- 过滤器 -->
 
     </class>
 </hibernate-mapping>

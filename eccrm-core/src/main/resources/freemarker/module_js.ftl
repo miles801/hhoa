@@ -3,7 +3,7 @@
  * Created by ${author!'CODE GENERATOR'} <#if current??>on ${current}</#if>.
  */
 (function (angular) {
-    var app = angular.module('eccrm.${name}.${entity}', [
+    var app = angular.module('${name}.${entity}', [
         'ngResource',
         'eccrm.angular',
         'eccrm.angularstrap'
@@ -128,6 +128,6 @@
                 common(o, callback);
             }
         }
-</#if>
     });
+</#if>
 })(angular);

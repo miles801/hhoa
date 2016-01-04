@@ -2,8 +2,8 @@
 * Created by ${author!'CODE GENERATOR'} <#if current??>on ${current}</#if>.
 */
 (function (window, angular, $) {
-    var app = angular.module('eccrm.${name}.${entity}.edit', [
-        'eccrm.${name}.${entity}',
+    var app = angular.module('${name}.${entity}.edit', [
+        '${name}.${entity}',
         'eccrm.angular',
         'eccrm.angularstrap'
     ]);

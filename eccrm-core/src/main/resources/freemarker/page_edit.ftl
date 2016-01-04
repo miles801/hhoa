@@ -6,26 +6,26 @@
 <html lang="en" >
 
 <head >
-    <title >编辑${cnName}</title >
+    <title>编辑${cnName}</title>
     <meta content="text/html" charset="utf-8" >
-    <link rel="stylesheet" type="text/css" href="<%=contextPath%>/vendor/bootstrap-v3.0/css/bootstrap.min.css" >
-    <link rel="stylesheet" type="text/css" href="<%=contextPath%>/style/standard/css/eccrm-common-new.css" >
+    <link rel="stylesheet" type="text/css" href="<%=contextPath%>/vendor/bootstrap-v3.0/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="<%=contextPath%>/style/standard/css/eccrm-common-new.css">
     <link rel="stylesheet" type="text/css" href="<%=contextPath%>/vendor/zTree/css/ztree.css" >
-    <script type="text/javascript" src="<%=contextPath%>/static/ycrl/javascript/jquery-all.js" ></script >
-    <script type="text/javascript" src="<%=contextPath%>/static/ycrl/javascript/angular-all.js" ></script >
-    <script type="text/javascript" src="<%=contextPath%>/static/ycrl/javascript/angular-strap-all.js" ></script >
+    <script type="text/javascript" src="<%=contextPath%>/static/ycrl/javascript/jquery-all.js" ></script>
+    <script type="text/javascript" src="<%=contextPath%>/static/ycrl/javascript/angular-all.js" ></script>
+    <script type="text/javascript" src="<%=contextPath%>/static/ycrl/javascript/angular-strap-all.js" ></script>
 <#if editPage.tree!false = true>
-    <script type="text/javascript" src="<%=contextPath%>/static/ycrl/javascript/angular-ztree-all.js" ></script >
+    <script type="text/javascript" src="<%=contextPath%>/static/ycrl/javascript/angular-ztree-all.js" ></script>
 </#if>
 <#if editPage.datepicker!false = true>
-    <script type="text/javascript" src="<%=contextPath%>/vendor/My97DatePicker/WdatePicker.js" ></script >
+    <script type="text/javascript" src="<%=contextPath%>/vendor/My97DatePicker/WdatePicker.js" ></script>
 </#if>
     <script type="text/javascript" >
         window.angular.contextPathURL = "<%=contextPath%>";
-    </script >
+    </script>
 </head >
 <body >
-<div class="main" ng-app="eccrm.${name}.${entity}.edit" ng-controller="Ctrl" >
+<div class="main" ng-app="${name}.${entity}.edit" ng-controller="Ctrl" >
     <div class="block" >
         <div class="block-header" >
                 <span class="header-text" >
@@ -83,6 +83,6 @@
     </div >
 </div >
 </body >
-<script type="text/javascript" src="<%=contextPath%>/app/${path}/${entity}.js" ></script >
-<script type="text/javascript" src="<%=contextPath%>/app/${path}/edit/${entity}_edit.js" ></script >
+<script type="text/javascript" src="<%=contextPath%>/app/${path}/${entity}.js" ></script>
+<script type="text/javascript" src="<%=contextPath%>/app/${path}/edit/${entity}_edit.js" ></script>
 </html >
