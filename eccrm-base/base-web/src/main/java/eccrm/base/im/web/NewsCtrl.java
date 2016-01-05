@@ -87,6 +87,7 @@ public class NewsCtrl extends BaseController {
     @RequestMapping(value = "/publish", params = {"id"}, method = RequestMethod.POST)
     public void publish(@RequestParam String id, HttpServletResponse response) {
         newsService.publish(id);
+        NewsVo news = newsService.findById(id);
         GsonUtils.printSuccess(response);
     }
 

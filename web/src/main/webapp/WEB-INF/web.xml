@@ -27,23 +27,23 @@
     </servlet-mapping>
 
 
-    <filter>
-        <filter-name>loginFilter</filter-name>
-        <filter-class>eccrm.web.filter.LoginFilter</filter-class>
-    </filter>
+
     <filter>
         <filter-name>pagerFilter</filter-name>
         <filter-class>com.ycrl.core.pager.PagerFilter</filter-class>
+        <async-supported>true</async-supported>
     </filter>
     <!-- 附件过滤器-->
     <filter>
         <filter-name>attachmentFilter</filter-name>
         <filter-class>eccrm.base.attachment.AttachmentFilter</filter-class>
+        <async-supported>true</async-supported>
     </filter>
     <!-- 编码过滤器 -->
     <filter>
         <filter-name>encoding</filter-name>
         <filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
+        <async-supported>true</async-supported>
         <init-param>
             <param-name>encoding</param-name>
             <param-value>UTF-8</param-value>

@@ -27,7 +27,7 @@ public interface NewsReceiverService {
     PageVo pageQuery(NewsReceiverBo bo);
 
     /**
-     * 根据ID查询对象的信�?
+     * 根据ID查询对象的信息
      */
     NewsReceiverVo findById(String id);
 

@@ -8,6 +8,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 
 import javax.servlet.*;
+import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -24,6 +25,7 @@ import java.util.Map;
  * @author miles
  * @datetime 13-12-15 下午11:43
  */
+@WebFilter(filterName = "loginFilter", urlPatterns = "/*", asyncSupported = true)
 public class LoginFilter implements Filter {
 
     private String defaultLoginHtml = "/index.html";

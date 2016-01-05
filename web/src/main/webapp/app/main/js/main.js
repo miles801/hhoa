@@ -153,13 +153,29 @@
 
         };
 
-        $timeout(function showOnlineNotice() {
-            NewsService.queryPersonalUnreadNews({start: 0, limit: 10}, function (data) {
-                data = data.data || {};
-                $scope.beans = data.data || [];
-                $timeout(showOnlineNotice, 1000 * 30);  // 30秒一次
+        /*$timeout(function showOnlineNotice() {
+         NewsService.queryPersonalUnreadNews({start: 0, limit: 10}, function (data) {
+         data = data.data || {};
+         $scope.beans = data.data || [];
+         $timeout(showOnlineNotice, 1000 * 30);  // 30秒一次
+         });
+         }, 1000);*/
+        var getMessage = function () {
+            $.ajax({
+                url: CommonUtils.contextPathURL('/servlet/message'),
+                timeout: 60 * 1000,
+                dataType: 'json',
+                success: function (data) {
+                    console.dir(data);
+                    getMessage();
+                },
+                error: function () {
+                    alert('错误');
+                    getMessage();
+                }
             });
-        }, 1000);
+        };
+        getMessage();
 
 
         // 当子菜单渲染完毕后

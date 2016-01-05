@@ -7,6 +7,8 @@ import com.ycrl.core.context.SecurityContext;
 import com.ycrl.core.pager.PageVo;
 import eccrm.base.employee.dao.EmployeeDao;
 import eccrm.base.employee.domain.Employee;
+import eccrm.base.im.MessagePool;
+import eccrm.base.im.NewsMessage;
 import eccrm.base.im.bo.NewsBo;
 import eccrm.base.im.bo.NewsReceiverBo;
 import eccrm.base.im.dao.NewsDao;
@@ -19,6 +21,7 @@ import eccrm.base.im.service.NewsService;
 import eccrm.base.im.vo.NewsVo;
 import eccrm.base.parameter.service.ParameterContainer;
 import eccrm.base.position.dao.PositionEmpDao;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -212,6 +215,12 @@ public class NewsServiceImpl implements NewsService, BeanWrapCallback<News, News
             nrr.setHasReply(false);
             nrr.setHasStar(false);
             newsRealReceiverDao.save(nrr);
+
+            // 添加到消息池中
+            MessagePool messagePool = MessagePool.getInstance();
+            NewsMessage message = new NewsMessage(nrr.getReceiverId());
+            BeanUtils.copyProperties(news, message);
+            messagePool.push(message);
         }
 
     }
