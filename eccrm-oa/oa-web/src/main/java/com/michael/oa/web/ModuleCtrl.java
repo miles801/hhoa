@@ -27,8 +27,17 @@ public class ModuleCtrl extends BaseController {
     @Resource
     private ModuleService moduleService;
 
-    @RequestMapping(value = {""}, method = RequestMethod.GET)
-    public String toList() {
+    // 技术学堂
+    @RequestMapping(value = {"/technology"}, method = RequestMethod.GET)
+    public String toTechnology(HttpServletRequest request) {
+        request.setAttribute("type", "TECHNOLOGY");
+        return "oa/module/list/module_list";
+    }
+
+    // 业务学堂
+    @RequestMapping(value = {"/business"}, method = RequestMethod.GET)
+    public String toBusiness(HttpServletRequest request) {
+        request.setAttribute("type", "BUSINESS");
         return "oa/module/list/module_list";
     }
 

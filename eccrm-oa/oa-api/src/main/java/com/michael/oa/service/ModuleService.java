@@ -11,6 +11,10 @@ import com.ycrl.core.pager.PageVo;
 public interface ModuleService {
 
     /**
+     * 业务参数：模块类型
+     */
+    String TYPE = "OA_MKLX";
+    /**
      * 保存
      */
     String save(Module module);
