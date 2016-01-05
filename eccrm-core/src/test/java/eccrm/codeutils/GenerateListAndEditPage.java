@@ -28,7 +28,7 @@ public class GenerateListAndEditPage {
 
     @Test
     public void testGenerateListAndEditPage() throws Exception {
-        Module module = new Module("oa", "blackList", "黑户");
+        Module module = new Module("oa", "knowledge", "知识");
         module.setPermitOverride(true);
         module.setAuthor("Michael");
 
@@ -45,12 +45,12 @@ public class GenerateListAndEditPage {
     private void setListPage(Module module) {
         ListPage listPage = new ListPage();
         listPage.addQueryCondition(new Row(
-                "客户名称:label", "name",
-                "客户类型:label", "type:select"
+                "标题:label", "title",
+                "关键字:label", "keywords"
         ));
-        listPage.addQueryBarButton("查询:search", "高级查询:asterisk", "重置:repeat");
-        listPage.addTableHeaderButton("新建:plus:marketing/add", "删除:remove");
-        listPage.addItem("客户名称", "客户类型", "客户信息", "原因", "关键字", "状态", "操作");
+        listPage.addQueryBarButton("查询:search:query", "重置:repeat:reset");
+        listPage.addTableHeaderButton("新建:plus:marketing/add", "删除:remove", "启用", "注销");
+        listPage.addItem("标题", "内容", "状态", "操作");
         module.setListPage(listPage);
     }
 
@@ -60,13 +60,15 @@ public class GenerateListAndEditPage {
         editPage.setDatepicker(true);
         //name:type:length:addOnIcon
         editPage.addFormRow(
-                "客户名称:label", "name:text:col-2-half", "客户类型:label", "code:text:col-2-half"
+                "标题:label", "title:text:col-2-half", "类型:label", "type:select:col-2-half"
         ).addFormRow(
-                "客户信息:label", "type:text:col-6-half"
-        ).addFormRow(
-                "原因:label", "reason:text:col-6-half"
+                "内容:label", "content:textarea:col-6-half"
         ).addFormRow(
                 "关键字:label", "keywords:text:col-6-half"
+        ).addFormRow(
+                "外部链接:label", "url:text:col-6-half"
+        ).addFormRow(
+                "状态:label", "status:select:col-6-half"
         );
         module.setEditPage(editPage);
     }

@@ -18,7 +18,7 @@ public class GenerateServerCode {
         // 第三个参数：包名称
         // 第四个参数：项目根路径
         // 第五个参数：作者
-        new GenerateDemo("Mobile", "call", "eccrm.call.mobile", "D:\\ejiajie", "JackLiu")
+        new GenerateDemo("Knowledge", "oa", "com.michael.oa", "D:\\workspace\\lr\\hh-oa", "Michael")
                 .generate();
     }
 }

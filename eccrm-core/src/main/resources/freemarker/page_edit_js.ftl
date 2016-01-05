@@ -28,7 +28,7 @@
                     AlertFactory.saveError($scope,data);
                 }
             });
-            CommonUtils.promise(promise,'保存中...');
+            CommonUtils.loading(promise,'保存中...');
         };
 
         // 更新
@@ -39,7 +39,7 @@
                 }
                 AlertFactory.updateError($scope,data);
             });
-            CommonUtils.promise(promise, '更新中...');
+            CommonUtils.loading(promise, '更新中...');
         };
 
         // 加载数据
@@ -47,12 +47,12 @@
             var promise = ${className}Service.get({id: id}, function (data){
                 $scope.beans = data.data || {};
             });
-            CommonUtils.promise(promise, 'Loading...');
+            CommonUtils.loading(promise, 'Loading...');
         };
 
 
         if(pageType == 'add') {
-            $scope.${entity} = {};
+            $scope.beans = {};
         } else if(pageType == 'modify') {
             $scope.load(id);
         } else if(pageType == 'view') {

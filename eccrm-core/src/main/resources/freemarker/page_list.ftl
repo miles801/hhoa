@@ -120,8 +120,9 @@
                                 <tr >
                                 <#if listPage.allowCheckbox! = true>
                                     <td class="width-min">
-                                        <input type="checkbox" style="height: 12px;" ng-model="checkAll" />
-                                    </td >
+                                        <div select-all-checkbox checkboxes="beans.data" selected-items="items"
+                                             anyone-selected="anyone"></div>
+                                    </td>
                                 </#if>
                                 <#list (listPage.items)! as item>
                                     <td >${item!''}</td >
@@ -136,7 +137,16 @@
                                     <td colspan="${listPage.items?size}" class="text-center" >没有查询到数据！</td >
                                 </#if>
                                 </tr >
-                                <tr ng-repeat="foo in beans.data" ng-cloak>
+                                <tr bindonce ng-repeat="foo in beans.data" ng-cloak>
+                                    <td><input type="checkbox" ng-model="foo.isSelected"/></td>
+                                    <td>
+                                        <a class="cp" title="编辑" ng-click="modify(foo.id);">
+                                            <i class="icons edit"></i>
+                                        </a>
+                                        <a class="cp" title="删除" ng-click="remove(foo.id);">
+                                            <i class="icons fork"></i>
+                                        </a>
+                                    </td>
                                 </tr>
                             </tbody >
                         </table >
@@ -149,7 +159,6 @@
     <div class="list-pagination" eccrm-page="pager" ></div >
     </#if>
 </div >
-
 </body >
 <script type="text/javascript" src="<%=contextPath%>/app/${path}/${entity}.js" ></script>
 <script type="text/javascript" src="<%=contextPath%>/app/${path}/list/${entity}_list.js" ></script>
