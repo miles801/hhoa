@@ -25,11 +25,11 @@
                     <span class="glyphicons search"></span>
                 </span>
                 <span class="header-button">
-                    <button type="button" class="btn btn-green btn-min" ng-click="">
+                    <button type="button" class="btn btn-green btn-min" ng-click="query()">
                         <span class="glyphicons search"></span>
                         查询
                     </button>
-                    <button type="button" class="btn btn-green btn-min" ng-click="">
+                    <button type="button" class="btn btn-green btn-min" ng-click="reset()">
                         <span class="glyphicons repeat"></span>
                         重置
                     </button>
@@ -41,13 +41,18 @@
                         <div class="form-label col-1-half">
                             <label>客户名称:</label>
                         </div>
-                        <input class="col-2-half" type="text" ng-model="beans.name"/>
+                        <input class="col-2-half" type="text" ng-model="condition.name"/>
+
+                        <div class="form-label col-1-half">
+                            <label>关键字:</label>
+                        </div>
+                        <input class="col-2-half" type="text" ng-model="condition.keywords"/>
 
                         <div class="form-label col-1-half">
                             <label>客户类型:</label>
                         </div>
-                        <select ng-model="beans.type" class="col-2-half"
-                                ng-options="foo.value as foo.name for foo in x">
+                        <select ng-model="condition.type" class="col-2-half"
+                                ng-options="foo.value as foo.name for foo in types">
                         </select>
                     </div>
                 </div>
@@ -66,7 +71,8 @@
                             <span class="glyphicons plus"></span>
                             新建
                         </a>
-                        <button type="button" class="btn btn-green btn-min" ng-click="">
+                        <button type="button" class="btn btn-green btn-min" ng-click="remove()" ng-cloak
+                                ng-disabled="!anyone">
                             <span class="glyphicons remove"></span>
                             删除
                         </button>
@@ -79,22 +85,36 @@
                             <thead class="table-header">
                             <tr>
                                 <td class="width-min">
-                                    <input type="checkbox" style="height: 12px;" ng-model="checkAll"/>
+                                    <div select-all-checkbox checkboxes="beans.data" selected-items="items"
+                                         anyone-selected="anyone"></div>
                                 </td>
                                 <td>客户名称</td>
                                 <td>客户类型</td>
                                 <td>客户信息</td>
                                 <td>原因</td>
                                 <td>关键字</td>
-                                <td>状态</td>
                                 <td>操作</td>
                             </tr>
                             </thead>
                             <tbody class="table-body">
                             <tr ng-show="!beans || !beans.total">
-                                <td colspan="8" class="text-center">没有查询到数据！</td>
+                                <td colspan="7" class="text-center">没有查询到数据！</td>
                             </tr>
-                            <tr ng-repeat="foo in beans.data" ng-cloak>
+                            <tr bindonce ng-repeat="foo in beans.data" ng-cloak>
+                                <td><input type="checkbox" ng-model="foo.isSelected"/></td>
+                                <td bo-text="foo.name"></td>
+                                <td bo-text="foo.typeName"></td>
+                                <td bo-text="foo.info"></td>
+                                <td bo-text="foo.reason"></td>
+                                <td bo-text="foo.keywords"></td>
+                                <td>
+                                    <a class="cp" title="编辑" ng-click="modify(foo.id);">
+                                        <i class="icons edit"></i>
+                                    </a>
+                                    <a class="cp" title="删除" ng-click="remove(foo.id);">
+                                        <i class="icons fork"></i>
+                                    </a>
+                                </td>
                             </tr>
                             </tbody>
                         </table>

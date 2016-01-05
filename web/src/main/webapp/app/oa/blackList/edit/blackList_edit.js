@@ -1,6 +1,6 @@
 /**
-* Created by Michael on 2016-01-05 00:16:23.
-*/
+ * Created by Michael on 2016-01-05 00:16:23.
+ */
 (function (window, angular, $) {
     var app = angular.module('oa.blackList.edit', [
         'oa.blackList',
@@ -8,52 +8,62 @@
         'eccrm.angularstrap'
     ]);
 
-    app.controller('Ctrl', function ($scope, CommonUtils, AlertFactory, BlackListService) {
+    app.controller('Ctrl', function ($scope, CommonUtils, AlertFactory, BlackListService, BlackListParam) {
 
         var pageType = $('#pageType').val();
         var id = $('#id').val();
+
+        // 黑户类型
+        BlackListParam.type(function (data) {
+            $scope.types = data || [];
+            $scope.types.unshift({name: '请选择'});
+        });
 
         // 保存
         $scope.save = function (createNew) {
             var promise = BlackListService.save($scope.beans, function (data) {
                 if (data && data['success'] == true) { //保存成功
-                    if(createNew===true){
-                        $scope.beans={};
+                    CommonUtils.addTab('update');
+                    if (createNew === true) {
+                        $scope.beans = {type: $scope.beans.type};
                     } else {
                         $scope.form.$setValidity('committed', false);
+                        CommonUtils.back();
                     }
                 } else {
-                    AlertFactory.saveError($scope,data);
+                    AlertFactory.saveError($scope, data);
                 }
             });
-            CommonUtils.promise(promise,'保存中...');
+            CommonUtils.loading(promise, '保存中...');
         };
 
         // 更新
         $scope.update = function () {
             var promise = BlackListService.update($scope.beans, function (data) {
                 if (data && data['success'] == true) { // 更新成功
+                    CommonUtils.addTab('update');
                     $scope.form.$setValidity('committed', false);
+                    CommonUtils.back();
                 }
-                AlertFactory.updateError($scope,data);
+                AlertFactory.updateError($scope, data);
             });
-            CommonUtils.promise(promise, '更新中...');
+            CommonUtils.loading(promise, '更新中...');
         };
 
         // 加载数据
-        $scope.load = function(id){
-            var promise = BlackListService.get({id: id}, function (data){
+        $scope.load = function (id) {
+            var promise = BlackListService.get({id: id}, function (data) {
                 $scope.beans = data.data || {};
             });
-            CommonUtils.promise(promise, 'Loading...');
+            CommonUtils.loading(promise, 'Loading...');
         };
 
 
-        if(pageType == 'add') {
+        if (pageType == 'add') {
             $scope.blackList = {};
-        } else if(pageType == 'modify') {
+        } else if (pageType == 'modify') {
             $scope.load(id);
-        } else if(pageType == 'view') {
+        } else if (pageType == 'view') {
             $scope.load(id);
             $('input,textarea,select').attr('disabled', 'disabled');
         } else {

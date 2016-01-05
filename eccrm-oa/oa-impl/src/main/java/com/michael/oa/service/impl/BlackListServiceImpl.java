@@ -6,8 +6,10 @@ import com.michael.oa.domain.BlackList;
 import com.michael.oa.service.BlackListService;
 import com.michael.oa.vo.BlackListVo;
 import com.ycrl.core.beans.BeanWrapBuilder;
+import com.ycrl.core.beans.BeanWrapCallback;
 import com.ycrl.core.hibernate.validator.ValidatorUtils;
 import com.ycrl.core.pager.PageVo;
+import eccrm.base.parameter.service.ParameterContainer;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -17,7 +19,7 @@ import java.util.List;
  * @author Michael
  */
 @Service("blackListService")
-public class BlackListServiceImpl implements BlackListService {
+public class BlackListServiceImpl implements BlackListService, BeanWrapCallback<BlackList, BlackListVo> {
     @Resource
     private BlackListDao blackListDao;
 
@@ -42,6 +44,7 @@ public class BlackListServiceImpl implements BlackListService {
         if (total == null || total == 0) return vo;
         List<BlackList> blackListList = blackListDao.query(bo);
         List<BlackListVo> vos = BeanWrapBuilder.newInstance()
+                .setCallback(this)
                 .wrapList(blackListList, BlackListVo.class);
         vo.setData(vos);
         return vo;
@@ -63,5 +66,10 @@ public class BlackListServiceImpl implements BlackListService {
         }
     }
 
-
+    @Override
+    public void doCallback(BlackList blackList, BlackListVo vo) {
+        ParameterContainer container = ParameterContainer.getInstance();
+        // 黑户类型
+        vo.setTypeName(container.getBusinessName(TYPE, blackList.getType()));
+    }
 }

@@ -11,6 +11,11 @@ import com.ycrl.core.pager.PageVo;
 public interface BlackListService {
 
     /**
+     * 业务参数：黑户类型
+     */
+    String TYPE = "OA_HHLX";
+
+    /**
      * 保存
      */
     String save(BlackList blackList);

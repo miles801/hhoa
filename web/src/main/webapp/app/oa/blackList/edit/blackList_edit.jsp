@@ -56,32 +56,40 @@
                     </div>
                     <div class="row">
                         <div class="form-label col-1-half">
-                            <label>客户名称:</label>
+                            <label validate-error="form.name">客户名称:</label>
                         </div>
-                        <input class="col-2-half" type="text" ng-model="beans.name"/>
+                        <input class="col-2-half" type="text" name="name" ng-model="beans.name"
+                               validate validate-required validate-max-length="60"/>
 
                         <div class="form-label col-1-half">
-                            <label>客户类型:</label>
+                            <label validate-error="form.type">客户类型:</label>
                         </div>
-                        <input class="col-2-half" type="text" ng-model="beans.code"/>
+                        <select ng-model="beans.type" class="col-2-half" name="type"
+                                ng-options="foo.value as foo.name for foo in types" validate validate-required>
+                        </select>
                     </div>
                     <div class="row">
                         <div class="form-label col-1-half">
-                            <label>客户信息:</label>
+                            <label validate-error="form.info">客户信息:</label>
                         </div>
-                        <input class="col-6-half" type="text" ng-model="beans.type"/>
+                        <input class="col-6-half" type="text" name="info"
+                               ng-model="beans.info" validate validate-max-length="100"/>
                     </div>
                     <div class="row">
                         <div class="form-label col-1-half">
-                            <label>原因:</label>
+                            <label validate-error="form.reason">原因:</label>
                         </div>
-                        <input class="col-6-half" type="text" ng-model="beans.reason"/>
+                        <input class="col-6-half" type="text" name="reason" ng-model="beans.reason"
+                               validate validate-max-length="1000"/>
                     </div>
+
                     <div class="row">
                         <div class="form-label col-1-half">
-                            <label>关键字:</label>
+                            <label validate-error="form.keywords">关键字:</label>
                         </div>
-                        <input class="col-6-half" type="text" ng-model="beans.keywords"/>
+                        <input class="col-6-half" type="text" name="keywords" placeholder="多个关键字请使用逗号或者空格进行分隔"
+                               ng-model="beans.keywords"
+                               validate validate-max-length="100"/>
                     </div>
                 </form>
             </div>
