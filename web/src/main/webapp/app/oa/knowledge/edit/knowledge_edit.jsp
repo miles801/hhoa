@@ -15,6 +15,7 @@
     <script type="text/javascript" src="<%=contextPath%>/static/ycrl/javascript/jquery-all.js"></script>
     <script type="text/javascript" src="<%=contextPath%>/static/ycrl/javascript/angular-all.js"></script>
     <script type="text/javascript" src="<%=contextPath%>/static/ycrl/javascript/angular-strap-all.js"></script>
+    <script type="text/javascript" src="<%=contextPath%>/static/ycrl/javascript/angular-upload.js"></script>
     <script type="text/javascript" src="<%=contextPath%>/vendor/kindeditor-4.1.10/kindeditor-min.js" charset="utf-8" ></script>
     <script type="text/javascript" src="<%=contextPath%>/vendor/kindeditor-4.1.10/lang/zh_CN.js" charset="utf-8" ></script>
     <script type="text/javascript">
@@ -86,6 +87,7 @@
                                placeholder="多个关键字请使用逗号分隔..."
                                validate validate-required validate-max-length="100"/>
                     </div>
+                    <div class="row" eccrm-upload="uploadOptions"></div>
                     <div class="row">
                         <div class="form-label col-1-half">
                             <label validate-error="form.url">外部链接:</label>

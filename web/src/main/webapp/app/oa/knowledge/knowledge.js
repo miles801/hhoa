@@ -12,10 +12,10 @@
     app.service('KnowledgeService', function (CommonUtils, $resource) {
         return $resource(CommonUtils.contextPathURL('/oa/knowledge/:method'), {}, {
             // 保存
-            save: {method: 'POST', params: {method: 'save'}, isArray: false},
+            save: {method: 'POST', params: {method: 'save', attachmentIds: '@attachmentIds'}, isArray: false},
 
             // 更新
-            update: {method: 'POST', params: {method: 'update'}, isArray: false},
+            update: {method: 'POST', params: {method: 'update', attachmentIds: '@attachmentIds'}, isArray: false},
 
             // 根据id查询信息
             get: {method: 'GET', params: {method: 'get', id: '@id'}, isArray: false},

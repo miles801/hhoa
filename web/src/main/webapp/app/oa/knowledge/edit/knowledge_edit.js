@@ -19,6 +19,12 @@
         // 富文本编辑器
         var editor = KindEditor.create('#content');
 
+        $scope.uploadOptions = {
+            bid: id,
+            viewLink: true,
+            maxFile: 10
+        };
+
         // 知识类型
         KnowledgeParam.type(function (data) {
             $scope.types = data || [];
@@ -30,14 +36,22 @@
             $scope.status = data || [];
         });
 
-        // 保存
-        $scope.save = function (createNew) {
+        var validAndWrap = function () {
             var content = editor.html();
             if (!content) {
                 alert('内容不能为空!');
-                return;
+                return false;
             }
             $scope.beans.content = content;
+            $scope.beans.attachmentIds = $scope.uploadOptions.getAttachment().join(',');
+            return true;
+        };
+
+        // 保存
+        $scope.save = function (createNew) {
+            if (!validAndWrap()) {
+                return;
+            }
             var promise = KnowledgeService.save($scope.beans, function (data) {
                 if (data && data['success'] == true) { //保存成功
                     if (createNew === true) {
@@ -56,12 +70,9 @@
 
         // 更新
         $scope.update = function () {
-            var content = editor.html();
-            if (!content) {
-                alert('内容不能为空!');
+            if (!validAndWrap()) {
                 return;
             }
-            $scope.beans.content = content;
             var promise = KnowledgeService.update($scope.beans, function (data) {
                 if (data && data['success'] == true) { // 更新成功
                     $scope.form.$setValidity('committed', false);
@@ -84,12 +95,15 @@
             CommonUtils.loading(promise, 'Loading...');
         };
 
+        $scope.back = CommonUtils.back;
+
 
         if (pageType == 'add') {
             $scope.beans = angular.extend({}, defaults);
         } else if (pageType == 'modify') {
             $scope.load(id);
         } else if (pageType == 'detail') {
+            $scope.uploadOptions.readonly = true;
             $scope.load(id, function () {
                 $('input,textarea,select').attr('disabled', 'disabled');
                 editor.readonly(true);
