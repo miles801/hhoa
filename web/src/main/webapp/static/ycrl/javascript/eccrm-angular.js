@@ -31,25 +31,7 @@
                 }
             }
         })
-        .service('ArtDialog', function () {
-            return {
-                loading: function () {
-                    return art.artDialog({
-                        lock: true,
-                        opacity: 0.3,
-                        title: '消息',
-                        drag: false,
-                        esc: false,
-                        resize: false,
-                        show: false,
-                        init: function () {
-                            this.hide();
-                        }
-                    });
-                }
-            };
-        })
-        .service('CommonUtils', ['Debounce', '$window', '$q', '$parse', '$cookies', 'ArtDialog', function (Debounce, $window, $q, $parse, $cookies, ArtDialog) {
+        .service('CommonUtils', ['Debounce', '$window', '$q', '$parse', '$cookies', function (Debounce, $window, $q, $parse, $cookies) {
             function CommonUtils() {
             }
 
@@ -158,6 +140,12 @@
                  * @returns {boolean}
                  */
                 loading: function (promise, title, successCallback, scope, failCallback) {
+                    var elm = $('<div style="position: absolute;top:0;left: 0;width: 100%;height: 100%;opacity: 0;">' +
+                        '<div style="position:fixed;height: 100%;width: 100%;background-color: #000;opacity: 0.8;z-index: 99998;"></div>' +
+                        '<div style="background: url(' + this.contextPathURL('/style/standard/css/icons/loading2.gif') + ') no-repeat;position: absolute;top:45%;left: 45%;width: 60px;height: 60px;background-size: contain;z-index: 99999;"></div>' +
+                        '</div>');
+                    $('body').append(elm);
+                    elm.animate({opacity: 1.0}, 150);
                     if (promise == null || typeof promise !== 'object') {
                         alert('CommonUtils.loading():错误的使用方式!请指定第一个参数为promise对象!');
                         return false;
@@ -177,15 +165,14 @@
                     }
 
                     // 如果
-                    var loadingDialog = ArtDialog.loading();
                     // 如果没有未来对象，则直接返回
 
 
                     var id = this.randomID();// 与消息绑定
 
                     // 如果没有显示，则显示
-                    loadingDialog.title(params[1]);
-                    loadingDialog.show();
+                    //loadingDialog.title(params[1]);
+                    //loadingDialog.show();
 
                     // 禁用form操作
                     var $scope = params[3];
@@ -201,7 +188,7 @@
                         }
 
                         // 关闭loading效果
-                        loadingDialog.close();
+                        elm.remove();
 
                         // 回调处理
                         if (data.success == true) {
@@ -210,18 +197,18 @@
                             angular.isFunction(params[4]) && params[4].call(data, data);
                         }
                     }, function (reason) {
-                        loadingDialog.close();
-                        art.artDialog({
-                            lock: true,
-                            opacity: 0.3,
-                            title: '异常!',
-                            drag: false,
-                            esc: true,
-                            resize: false,
-                            show: true,
-                            icon: 'error',
-                            content: reason
-                        });
+                        elm.remove();
+                        /*art.artDialog({
+                         lock: true,
+                         opacity: 0.3,
+                         title: '异常!',
+                         drag: false,
+                         esc: true,
+                         resize: false,
+                         show: true,
+                         icon: 'error',
+                         content: reason
+                         });*/
                     });
                 }
                 ,
@@ -771,10 +758,10 @@
             }
         }])
 
-    /**
-     * 给当前元素下的所有input，textarea，select添加readonly属性
-     * 用法<div eccrm-readonly>
-     */
+        /**
+         * 给当前元素下的所有input，textarea，select添加readonly属性
+         * 用法<div eccrm-readonly>
+         */
         .directive('eccrmReadonly', [function () {
             return {
                 link: function (scope, ele) {
@@ -782,10 +769,10 @@
                 }
             }
         }])
-    /**
-     * 给当前元素下的所有input，textarea，select添加disabled属性
-     * 用法<div eccrm-disabled>
-     */
+        /**
+         * 给当前元素下的所有input，textarea，select添加disabled属性
+         * 用法<div eccrm-disabled>
+         */
         .directive('eccrmDisabled', [function () {
             return {
                 link: function (scope, ele) {
@@ -1024,9 +1011,9 @@
                 return value;
             }
         }])
-    /**
-     * 去掉HTML Tag
-     */
+        /**
+         * 去掉HTML Tag
+         */
         .filter('removeHTMLTag', function () {
             return function (value) {
                 if (typeof value === 'string') {
