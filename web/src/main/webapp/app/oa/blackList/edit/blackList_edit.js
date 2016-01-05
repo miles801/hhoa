@@ -12,7 +12,6 @@
 
         var pageType = $('#pageType').val();
         var id = $('#id').val();
-
         // 黑户类型
         BlackListParam.type(function (data) {
             $scope.types = data || [];
@@ -60,7 +59,7 @@
 
 
         if (pageType == 'add') {
-            $scope.blackList = {};
+            $scope.beans = {};
         } else if (pageType == 'modify') {
             $scope.load(id);
         } else if (pageType == 'view') {
