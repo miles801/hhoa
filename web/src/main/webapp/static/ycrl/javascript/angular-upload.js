@@ -292,7 +292,9 @@ SWFOption.prototype = {
                                 var id = CommonUtils.randomID(6);
                                 fileInput.attr('id', id);
                                 options = angular.extend(new UploadOption(), cfg);
-
+                                if (options.readonly === true) {
+                                    options.canDelete = false;
+                                }
 
                                 /**
                                  * 获取所有的附件ID
@@ -400,6 +402,11 @@ SWFOption.prototype = {
                 }
                 return '0KB';
 
+            }
+        })
+        .filter('linkAddr', function (CommonUtils) {
+            return function (id) {
+                return window.location.origin + CommonUtils.contextPathURL('/attachment/download?id=' + id)
             }
         });
 })

@@ -10,17 +10,19 @@
             <tr >
                 <th style="width: 40px;" >序号</th >
                 <th >附件名称</th >
+                <th >访问地址</th >
                 <th style="width: 150px;" >附件大小</th >
                 <th style="width: 150px;" >上传者</th >
                 <th style="width:150px;" >上传时间</th >
                 <th style="width: 80px" >操作</th >
             </tr >
             <tr ng-cloak ng-show="!attachments || !attachments.length" >
-                <td colspan="6" style="text-align: center;" >无附件!</td >
+                <td colspan="7" style="text-align: center;" >无附件!</td >
             </tr >
             <tr bindonce ng-repeat="at in attachments" >
                 <td bo-text="$index+1" ></td >
                 <td bo-text="at.fileName" ></td >
+                <td bo-text="at.id|linkAddr" ></td >
                 <td bo-text="at.size | fileSize" ></td >
                 <td bo-text="at.creatorName" ></td >
                 <td bo-text="at.uploadTime | eccrmDatetime" ></td >
