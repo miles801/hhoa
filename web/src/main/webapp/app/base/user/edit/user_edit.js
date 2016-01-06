@@ -35,7 +35,6 @@
             // 设置员工信息
             var setEmpInfo = function (obj) {
                 var user = $scope.user;
-                user.id = obj.id;
                 user.deptId = obj.organizationId;// 机构
                 user.deptName = obj.organizationName;// 机构名称
                 user.employeeId = obj.id;
