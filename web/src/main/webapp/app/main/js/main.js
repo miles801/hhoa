@@ -131,7 +131,7 @@
 
             hideColbar();
             // 显示便签
-            $('#iframe').attr('src', 'tools/note')
+            $('#iframe').show().attr('src', 'tools/note')
         };
 
         // 新闻公告

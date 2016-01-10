@@ -79,7 +79,10 @@
             // 查看便签
             // 参数（必须）：id 便签id
             view: function (id) {
-                var modal = $modal({template: CommonUtils.contextPathURL('app/tools/note/note-tpl.html'), backdrop: true});
+                var modal = $modal({
+                    template: CommonUtils.contextPathURL('app/tools/note/note-tpl.html'),
+                    backdrop: true
+                });
                 var $scope = modal.$scope;
                 $scope.bean = {};
                 $scope.pageType = 'view';
@@ -123,18 +126,17 @@
             });
         };
         $scope.view = NoteModal.view;
-
         // 每次加载的条数
         $scope.start = 0;
         $scope.limit = 100;
         $scope.total = 0;
         $scope.query = function () {
-            var result = NoteService.pageQuery({start: $scope.start, limit: $scope.limit});
-            CommonUtils.loading(result, '正在努力加载...', function (data) {
+            var result = NoteService.pageQuery({start: $scope.start, limit: $scope.limit}, function (data) {
                 data = data || {};
                 $scope.total = data.total || 0;
                 $scope.notes = data.data || [];
             });
+            CommonUtils.loading(result, '正在努力加载...');
         };
         // 加载更多
         $scope.queryMore = function () {
