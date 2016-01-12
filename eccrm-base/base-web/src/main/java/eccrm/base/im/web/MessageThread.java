@@ -1,12 +1,12 @@
 package eccrm.base.im.web;
 
+import com.michael.cache.core.CacheProvider;
+import com.ycrl.core.SystemContainer;
 import com.ycrl.utils.gson.GsonUtils;
-import eccrm.base.im.MessagePool;
-import org.apache.log4j.Logger;
+import com.ycrl.utils.string.StringUtils;
 
 import javax.servlet.AsyncContext;
 import javax.servlet.http.HttpServletResponse;
-import java.util.Random;
 
 /**
  * @author Michael
@@ -23,22 +23,17 @@ public class MessageThread implements Runnable {
 
     @Override
     public void run() {
-        MessagePool messagePool = MessagePool.getInstance();
-        Logger logger = Logger.getLogger(MessageThread.class);
+        CacheProvider cacheProvider = SystemContainer.getInstance().getBean(CacheProvider.class);
+        if (cacheProvider == null) {
+            return;
+        }
+        String messageKey = "message:" + userId + ":";
         int i = 0;
-        Random random = new Random();
-        while (i++ < 200) {
-//            logger.info("读取(" + userId + ")的消息....");
-            /*List<Message> messages = messagePool.pop(userId);
-            if (messages != null && !messages.isEmpty()) {
-                logger.info("读取到(" + userId + ")的消息，即将返回响应...");
+        while (i++ < 1000) {
+            String messages = cacheProvider.popList(messageKey);
+            if (StringUtils.isNotEmpty(messages)) {
+                System.out.println("获取到消息:"+messages);
                 GsonUtils.printData((HttpServletResponse) context.getResponse(), messages);
-                context.complete();
-                return;
-            }*/
-            int d=random.nextInt(1000);
-            if (d > 990) {
-                GsonUtils.printData((HttpServletResponse) context.getResponse(), d);
                 context.complete();
                 return;
             }

@@ -3,6 +3,7 @@ package com.ycrl.core.spring;
 import com.michael.licence.Licence;
 import com.michael.licence.LicenceVerify;
 import com.ycrl.core.SystemContainer;
+import com.ycrl.core.pool.ThreadPool;
 import eccrm.utils.NetUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.BeanFactory;
@@ -115,5 +116,9 @@ public class SpringContextLoader extends ContextLoader implements ServletContext
         logger.info("系统即将关闭，开始调用已注册的卸载程序....");
         SpringUnloadListenerContainer container = SystemContainer.getInstance().getBean(SpringUnloadListenerContainer.class);
         container.execute(servletContextEvent.getServletContext());
+        logger.info("系统即将关闭，开始调用已注册的卸载程序....OK");
+
+        // 关闭线程池
+        ThreadPool.getInstance().shutdown();
     }
 }

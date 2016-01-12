@@ -1,11 +1,11 @@
 package eccrm.login;
 
+import com.michael.cache.core.CacheProvider;
 import com.ycrl.core.SystemContainer;
+import com.ycrl.utils.gson.GsonUtils;
 import eccrm.base.auth.domain.AccreditData;
-import eccrm.base.auth.domain.AccreditFunc;
 import eccrm.base.auth.service.AccreditDataService;
 import eccrm.base.auth.service.AccreditFuncService;
-import eccrm.base.auth.service.PersonalPermissionContext;
 import eccrm.base.position.service.PositionEmpService;
 import eccrm.base.user.service.LoginSuccessEvent;
 import eccrm.base.user.vo.UserVo;
@@ -43,28 +43,20 @@ public class LoginSuccessEventImpl implements LoginSuccessEvent {
 
         String employeeName = userVo.getEmployeeName();
 
-        // 设置在线用户数
 
+        // 加入缓存
+        CacheProvider cacheProvider = SystemContainer.getInstance().getBean(CacheProvider.class);
+        cacheProvider.addToSet("login:", empId); // 缓存已登录用户id
+        cacheProvider.put("user:", empId, GsonUtils.toJson(userVo));    // 缓存用户个人信息
+        // 设置在线用户数
         String ip = NetUtils.getClientIpAddress(request);
         logger.info("[" + ip + ":" + userVo.getUsername() + "(" + employeeName + ")] login success!");
 
-
-        // 获得员工所有的岗位的id
-        /*List<String> positionIds = positionEmpService.findPositionIds(empId);
-        if (positionIds != null) {
-            Set<String> positions = new HashSet<String>();
-            positions.addAll(positionIds);
-            session.setAttribute(PersonalPermissionContext.POSITIONS, positions);
-        }*/
-
-        // 查询员工所有岗位被授权的操作资源的编号(用于判断用户是否具有某些权限）
-        // FIXME 这里存在性能问题，当一个系统中的操作权限很多的时候，session缓存的量太大
-        Map<String, Boolean> positionResourceMap = new HashMap<String, Boolean>();
+        //  缓存被被授权的资源编号
         List<String> resourceCodes = funcService.queryPersonalResourceCode();
-        for (String rc : resourceCodes) {
-            positionResourceMap.put(rc, true);
-        }
-        session.setAttribute(AccreditFunc.ACCREDIT_FUNCTION_CODE, positionResourceMap);
+        String privilegeKey = "privilege:" + empId + ":";
+        cacheProvider.clearList(privilegeKey);
+        cacheProvider.addToSet(privilegeKey, resourceCodes.toArray(new String[resourceCodes.size()]));
 
         // 查询个人被授权的所有数据权限的编号集合
         AccreditDataService ads = systemContainer.getBean(AccreditDataService.class);
@@ -82,16 +74,8 @@ public class LoginSuccessEventImpl implements LoginSuccessEvent {
                     }
                     tmp.add(foo);
                 }
-                session.setAttribute(PersonalPermissionContext.DATA_RESOURCE, accreditDataMap);
             }
         }
 
-        // 查询个人组织机构
-        /*List<String> orgList = positionEmpService.findOrgIds(empId);
-        Set<String> orgs = new HashSet<String>();
-        if (orgList != null) {
-            orgs.addAll(orgList);
-            session.setAttribute(PersonalPermissionContext.ORGS, orgs);
-        }*/
     }
 }

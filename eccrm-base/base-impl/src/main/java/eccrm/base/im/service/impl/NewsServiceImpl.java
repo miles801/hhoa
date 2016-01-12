@@ -1,14 +1,14 @@
 package eccrm.base.im.service.impl;
 
+import com.michael.cache.core.CacheProvider;
 import com.ycrl.core.SystemContainer;
 import com.ycrl.core.beans.BeanWrapBuilder;
 import com.ycrl.core.beans.BeanWrapCallback;
 import com.ycrl.core.context.SecurityContext;
 import com.ycrl.core.pager.PageVo;
+import com.ycrl.utils.gson.GsonUtils;
 import eccrm.base.employee.dao.EmployeeDao;
 import eccrm.base.employee.domain.Employee;
-import eccrm.base.im.MessagePool;
-import eccrm.base.im.NewsMessage;
 import eccrm.base.im.bo.NewsBo;
 import eccrm.base.im.bo.NewsReceiverBo;
 import eccrm.base.im.dao.NewsDao;
@@ -21,7 +21,6 @@ import eccrm.base.im.service.NewsService;
 import eccrm.base.im.vo.NewsVo;
 import eccrm.base.parameter.service.ParameterContainer;
 import eccrm.base.position.dao.PositionEmpDao;
-import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -206,6 +205,7 @@ public class NewsServiceImpl implements NewsService, BeanWrapCallback<News, News
         }
 
         // 根据接收对象，分配给真正的接收者
+        CacheProvider cacheProvider = SystemContainer.getInstance().getBean(CacheProvider.class);
         for (NewsRealReceiver nrr : newsRealReceivers) {
             nrr.setNewsId(news.getId());
             nrr.setNewsTitle(news.getTitle());
@@ -217,10 +217,7 @@ public class NewsServiceImpl implements NewsService, BeanWrapCallback<News, News
             newsRealReceiverDao.save(nrr);
 
             // 添加到消息池中
-            MessagePool messagePool = MessagePool.getInstance();
-            NewsMessage message = new NewsMessage(nrr.getReceiverId());
-            BeanUtils.copyProperties(news, message);
-            messagePool.push(message);
+            cacheProvider.addToList("message:" + nrr.getReceiverId() + ":", GsonUtils.toJson(nrr));
         }
 
     }

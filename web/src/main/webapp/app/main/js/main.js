@@ -25,7 +25,7 @@
         }
     });
 
-    app.controller('MainController', function ($scope, $http, $timeout, CommonUtils, AlertFactory, NewsService) {
+    app.controller('MainController', function ($scope, $http, $timeout, CommonUtils, AlertFactory, AsideFactory) {
         $scope.menus = []; // 菜单
 
         $scope.subMenus = [];// 子菜单
@@ -166,11 +166,17 @@
                 timeout: 60 * 1000,
                 dataType: 'json',
                 success: function (data) {
-                    console.dir(data);
+                    if (data && data.success && data.data) {
+                        var obj = $.parseJSON(data.data);
+                        AsideFactory.info({
+                            title: obj.newsTitle,
+                            content: obj.content || ''
+                        });
+                    }
                     getMessage();
                 },
                 error: function () {
-                    alert('错误');
+                    //alert('错误');
                     getMessage();
                 }
             });

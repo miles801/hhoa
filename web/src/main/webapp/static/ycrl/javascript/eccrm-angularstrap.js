@@ -330,7 +330,8 @@
                     var modal = $aside(angular.extend({
                         container: 'body',
                         show: true,
-                        template: CommonUtils.contextPathURL('static/ycrl/javascript/template/aside.html')
+                        backdrop: 'static'
+                        //template: CommonUtils.contextPathURL('static/ycrl/javascript/template/aside.html')
                     }, options));
                     var $scope = modal.$scope;
                     $scope.$hide = modal.hide;
