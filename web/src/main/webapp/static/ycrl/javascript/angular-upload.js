@@ -249,6 +249,7 @@ SWFOption.prototype = {
                 },
                 link: function (scope, elem) {
                     var options;
+                    var fileupload;
                     scope.attachments = [];
 
                     /**
@@ -267,6 +268,7 @@ SWFOption.prototype = {
                     scope.deleteAttachment = function (index, id) {
                         scope.content = '附件删除后,将不可恢复,请确认删除!';
                         ModalFactory.remove(scope, function () {
+                            fileupload.uplodify('cancel', id, true);
                             $http.get(CommonUtils.contextPathURL('/attachment/delete?ids=' + id))
                                 .success(function (data) {
                                     if (data && data.success) {
@@ -288,9 +290,9 @@ SWFOption.prototype = {
                         // 获取自定义配置 & 初始化uploadify参数
                         var promise = CommonUtils.parseToPromise(scope.options)
                             .then(function (cfg) {
-                                var fileInput = elem.find('input[type="file"]');
+                                fileupload = elem.find('input[type="file"]');
                                 var id = CommonUtils.randomID(6);
-                                fileInput.attr('id', id);
+                                fileupload.attr('id', id);
                                 options = angular.extend(new UploadOption(), cfg);
                                 if (options.readonly === true) {
                                     options.canDelete = false;
@@ -315,13 +317,35 @@ SWFOption.prototype = {
                                     if (attachments.length > 0) {
                                         var url = CommonUtils.contextPathURL('/attachment/delete?ids=' + this.getAttachment().join(','));
                                         $http.get(url).success(function () {
-                                            elem.find('input[type="file"]').uploadify('cancel', '*');
-                                            attachments.splice(0, attachments.length);
+                                            fileupload.uploadify('cancel', '*');
+                                            attachments.length = 0;
                                         }).error(function () {
                                             alert('附件清除失败!');
                                         });
                                     }
 
+                                };
+
+                                /**
+                                 * 移除指定的附件列表
+                                 * @param ids 附件ID集合
+                                 * @param callback
+                                 */
+                                options.remove = function (ids, callback) {
+                                    ids = (typeof ids === 'string' ? [ids] : ids);
+                                    var attachments = this.getAttachment();
+                                    if ($.isArray(ids) && attachments.length > 0) {
+                                        var url = CommonUtils.contextPathURL('/attachment/delete?ids=' + ids.join(','));
+                                        $http.get(url).success(function () {
+                                            angular.forEach(function (ids, id) {
+                                                fileupload.uploadify('cancel', id, true);
+                                                scope.attachments.splice($.inArray(id, attachments), 1);
+                                            });
+                                            angular.isFunction(callback) && callback();
+                                        }).error(function () {
+                                            alert('附件清除失败!');
+                                        });
+                                    }
                                 };
 
                                 // 回显
@@ -367,7 +391,7 @@ SWFOption.prototype = {
 
 
                                 // 真正初始化
-                                fileInput.uploadify(options.swfOption);
+                                fileupload.uploadify(options.swfOption);
                             });
                     };
 

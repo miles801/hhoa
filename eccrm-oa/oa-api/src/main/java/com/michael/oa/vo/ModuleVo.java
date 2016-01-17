@@ -13,18 +13,10 @@ public class ModuleVo extends CommonVo {
     private String type;
     private String typeName;
 
-    // 图片
-    private String picture;
-    // 视频地址
-    private String video;
+    // 模块的logo
+    private String logo;
     // 简介
     private String summary;
-
-    // 是否顶置
-    private Boolean isTop;
-
-    // 是否允许评论
-    private Boolean allowComment;
 
     // 排序号
     private Integer sequenceNo;
@@ -36,6 +28,23 @@ public class ModuleVo extends CommonVo {
     private String ownerId;
     private String ownerName;
 
+    private String statusName;
+
+    public String getTypeName() {
+        return typeName;
+    }
+
+    public void setTypeName(String typeName) {
+        this.typeName = typeName;
+    }
+
+    public String getStatusName() {
+        return statusName;
+    }
+
+    public void setStatusName(String statusName) {
+        this.statusName = statusName;
+    }
 
     public String getName() {
         return name;
@@ -53,28 +62,12 @@ public class ModuleVo extends CommonVo {
         this.type = type;
     }
 
-    public String getTypeName() {
-        return typeName;
+    public String getLogo() {
+        return logo;
     }
 
-    public void setTypeName(String typeName) {
-        this.typeName = typeName;
-    }
-
-    public String getPicture() {
-        return picture;
-    }
-
-    public void setPicture(String picture) {
-        this.picture = picture;
-    }
-
-    public String getVideo() {
-        return video;
-    }
-
-    public void setVideo(String video) {
-        this.video = video;
+    public void setLogo(String logo) {
+        this.logo = logo;
     }
 
     public String getSummary() {
@@ -83,22 +76,6 @@ public class ModuleVo extends CommonVo {
 
     public void setSummary(String summary) {
         this.summary = summary;
-    }
-
-    public Boolean getTop() {
-        return isTop;
-    }
-
-    public void setTop(Boolean top) {
-        isTop = top;
-    }
-
-    public Boolean getAllowComment() {
-        return allowComment;
-    }
-
-    public void setAllowComment(Boolean allowComment) {
-        this.allowComment = allowComment;
     }
 
     public Integer getSequenceNo() {

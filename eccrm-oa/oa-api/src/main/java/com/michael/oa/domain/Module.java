@@ -1,6 +1,7 @@
 package com.michael.oa.domain;
 
 import com.ycrl.base.common.CommonDomain;
+import eccrm.base.attachment.AttachmentSymbol;
 import org.hibernate.validator.constraints.Length;
 
 import javax.validation.constraints.Max;
@@ -13,24 +14,19 @@ import java.util.Date;
  *
  * @author Michael
  */
-public class Module extends CommonDomain {
+public class Module extends CommonDomain implements AttachmentSymbol {
     @NotNull(message = "模块名称不能为空!")
+    @Length(max = 40)
     private String name;
 
     @NotNull(message = "模块类型不能为空!")
     private String type;
 
-    private String picture;
-    private String video;
+    // 模块的logo
+    private String logo;
     // 简介
     @Length(max = 1000, message = "简介的最大长度为500个汉字!")
     private String summary;
-
-    // 是否顶置
-    private Boolean isTop;
-
-    // 是否允许评论
-    private Boolean allowComment;
 
     // 排序号
     @Min(value = 0, message = "排序号最小值为:0")
@@ -62,20 +58,13 @@ public class Module extends CommonDomain {
         this.type = type;
     }
 
-    public String getPicture() {
-        return picture;
+
+    public String getLogo() {
+        return logo;
     }
 
-    public void setPicture(String picture) {
-        this.picture = picture;
-    }
-
-    public String getVideo() {
-        return video;
-    }
-
-    public void setVideo(String video) {
-        this.video = video;
+    public void setLogo(String logo) {
+        this.logo = logo;
     }
 
     public String getSummary() {
@@ -84,22 +73,6 @@ public class Module extends CommonDomain {
 
     public void setSummary(String summary) {
         this.summary = summary;
-    }
-
-    public Boolean getTop() {
-        return isTop;
-    }
-
-    public void setTop(Boolean top) {
-        isTop = top;
-    }
-
-    public Boolean getAllowComment() {
-        return allowComment;
-    }
-
-    public void setAllowComment(Boolean allowComment) {
-        this.allowComment = allowComment;
     }
 
     public Integer getSequenceNo() {
@@ -132,5 +105,10 @@ public class Module extends CommonDomain {
 
     public void setOwnerName(String ownerName) {
         this.ownerName = ownerName;
+    }
+
+    @Override
+    public String businessId() {
+        return getId();
     }
 }

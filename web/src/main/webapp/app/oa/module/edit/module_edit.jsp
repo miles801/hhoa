@@ -1,4 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%
     String contextPath = request.getContextPath();
 %>
@@ -14,7 +15,9 @@
     <script type="text/javascript" src="<%=contextPath%>/static/ycrl/javascript/jquery-all.js"></script>
     <script type="text/javascript" src="<%=contextPath%>/static/ycrl/javascript/angular-all.js"></script>
     <script type="text/javascript" src="<%=contextPath%>/static/ycrl/javascript/angular-strap-all.js"></script>
-    <script type="text/javascript" src="<%=contextPath%>/vendor/My97DatePicker/WdatePicker.js"></script>
+    <script type="text/javascript" src="<%=contextPath%>/static/ycrl/javascript/angular-ztree-all.js"></script>
+    <script type="text/javascript" src="<%=contextPath%>/static/ycrl/javascript/angular-upload.js"></script>
+    <script type="text/javascript" src="<%=contextPath%>/app/employee/employee-modal.js"></script>
     <script type="text/javascript">
         window.angular.contextPathURL = "<%=contextPath%>";
     </script>
@@ -57,28 +60,64 @@
                     </div>
                     <div class="row">
                         <div class="form-label col-1-half">
-                            <label>模块名称:</label>
+                            <label validate-error="form.name">模块名称:</label>
                         </div>
-                        <input class="col-2-half" type="text" ng-model="beans.name"/>
+                        <input class="col-2-half" type="text" name="name" ng-model="beans.name"
+                               validate validate-required validate-max-length="40"/>
 
                         <div class="form-label col-1-half">
-                            <label>模块类型:</label>
+                            <label validate-error="form.type">模块类型:</label>
                         </div>
-                        <select ng-model="beans.code" class="col-2-half"
-                                ng-options="foo.value as foo.name for foo in x">
+                        <select ng-model="beans.type" class="col-2-half" name="type"
+                                ng-options="foo.value as foo.name for foo in types"
+                                validate validate-required>
                         </select>
                     </div>
                     <div class="row">
                         <div class="form-label col-1-half">
-                            <label>简介:</label>
+                            <label validate-error="form.ownerId">负责人:</label>
                         </div>
-                        <input class="col-6-half" type="text" ng-model="beans.type"/>
+                        <div class="col-2-half">
+                            <input type="text" name="ownerId" ng-model="beans.ownerName" class="col-12"
+                                   validate validate-required readonly ng-click="pickEmp();"/>
+                            <span class="add-on">
+                                <i class="icons icon user" ng-click="clearEmp();"></i>
+                            </span>
+                        </div>
+
+                        <div class="form-label col-1-half">
+                            <label validate-error="form.sequenceNo">排序号:</label>
+                        </div>
+                        <input type="number" name="sequenceNo" ng-model="beans.sequenceNo" class="col-2-half"
+                               validate validate-int validate-min-value="0" validate-max-value="1000"/>
+                    </div>
+                    <div class="row" eccrm-upload="options"></div>
+                    <div class="row">
+                        <div class="form-label col-1-half">
+                            <label>&nbsp;</label>
+                        </div>
+                        <div id="logo"></div>
+                    </div>
+                    <div class="row">
+                        <div class="form-label col-1-half">
+                            <label validate-error="form.video">视频连接:</label>
+                        </div>
+                        <input type="text" name="video" ng-model="beans.video" class="col-6-half"
+                               validate validate-max-length="200"/>
+                    </div>
+                    <div class="row">
+                        <div class="form-label col-1-half">
+                            <label validate-error="form.summary">简介:</label>
+                        </div>
+                        <textarea class="col-10-half" type="text" ng-model="beans.summary" rows="6"
+                                  validate validate-max-length="1000"></textarea>
                     </div>
                     <div class="row">
                         <div class="form-label col-1-half">
                             <label>描述:</label>
                         </div>
-                        <input class="col-6-half" type="text" ng-model="beans.reason"/>
+                        <textarea class="col-10-half" rows="6" type="text" ng-model="beans.description"
+                                  validate validate-max-length="1000"></textarea>
                     </div>
                 </form>
             </div>
