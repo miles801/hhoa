@@ -7,6 +7,7 @@ import com.ycrl.core.HibernateDaoHelper;
 import com.ycrl.core.hibernate.criteria.CriteriaUtils;
 import com.ycrl.utils.string.StringUtils;
 import org.hibernate.Criteria;
+import org.hibernate.criterion.Disjunction;
 import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
@@ -72,10 +73,13 @@ public class KnowledgeDaoImpl extends HibernateDaoHelper implements KnowledgeDao
         if (bo != null) {
             String keywordsOrTitle = bo.getKeywordsOrTitle();
             if (StringUtils.isNotEmpty(keywordsOrTitle)) {
-                criteria.add(Restrictions.or(
-                        Restrictions.like("title", keywordsOrTitle, MatchMode.ANYWHERE),
-                        Restrictions.like("keywords", keywordsOrTitle, MatchMode.ANYWHERE)
-                ));
+                String keywords[] = keywordsOrTitle.split("\\s|,");
+                Disjunction disjunction = Restrictions.disjunction();
+                for (String keyword : keywords) {
+                    disjunction.add(Restrictions.like("keywords", keyword, MatchMode.ANYWHERE));
+                    disjunction.add(Restrictions.like("title", keyword, MatchMode.ANYWHERE));
+                }
+                criteria.add(disjunction);
             }
         }
     }
