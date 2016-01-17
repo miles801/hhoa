@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.michael.oa.domain">
+    <class name="Article" table="OA_ARTICLE">
+        <id name="id" column="ID" length="40">
+            <generator class="uuid"/>
+        </id>
+
+        <property name="title" column="A_TITLE" type="string" length="100" not-null="true"/>
+        <property name="authorId" column="AUTHOR_ID" type="string" length="40" not-null="true"/>
+        <property name="authorName" column="AUTHOR_NAME" type="string" length="50"/>
+        <property name="publishTime" column="PUBLISH_TIME" type="timestamp"/>
+        <property name="summary" column="A_SUMMARY" type="string" length="200"/>
+        <property name="content" column="A_CONTENT" type="text" not-null="true"/>
+        <property name="videoUrl" column="VIDEO_URL" type="string" length="200"/>
+        <property name="keywords" column="A_KEYWORDS" type="string" length="40"/>
+        <property name="moduleId" column="MODULE_ID" type="string" length="40" not-null="true"/>
+        <property name="moduleName" column="MODULE_NAME" type="string" length="40" not-null="true"/>
+
+        <!-- 公共属性 -->
+        <property name="status" column="STATUS" type="string" length="40" not-null="true"/>
+        <property name="creatorId" column="CREATOR_ID" type="string" length="40" update="false"/>
+        <property name="creatorName" column="CREATOR_NAME" type="string" length="40"/>
+        <property name="createdDatetime" column="CREATED_DATETIME" type="timestamp" update="false"/>
+        <property name="modifierId" column="MODIFIER_ID" type="string" length="40"/>
+        <property name="modifierName" column="MODIFIER_NAME" type="string" length="40"/>
+        <property name="modifiedDatetime" column="MODIFIED_DATETIME" type="timestamp"/>
+        <property name="tenementId" column="TENEMENT_ID" type="string" length="40" update="false"/>
+
+
+    </class>
+</hibernate-mapping>

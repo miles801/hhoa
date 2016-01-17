@@ -1,0 +1,84 @@
+<div class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" style="width: 800px;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" ng-click="$hide()">&times;</button>
+                <h4 class="modal-title">
+                    <span>选择模块</span>
+                </h4>
+            </div>
+            <div class="modal-body">
+                <form name="form" class="form-horizontal condition-row-1">
+                    <div class="list-condition">
+                        <div class="block">
+                            <div class="block-header">
+                                <span class="header-button">
+                                    <button type="button" class="btn btn-green btn-min" ng-click="query()">
+                                        <span class="glyphicons binoculars"></span>查询
+                                    </button>
+                                </span>
+                            </div>
+                            <div class="block-content">
+                                <div class="content-wrap" style="margin-top: 5px">
+                                    <div class="row">
+                                        <div class="form-label col-2">
+                                            <label>模块名称:</label>
+                                        </div>
+                                        <input class="col-3-half" type="text" ng-model="condition.name"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="list-result">
+                        <div class="block ">
+                            <div class="block-content">
+                                <div class="table-responsive panel panel-table first-min" style="border: none;">
+                                    <table class="table table-striped table-hover">
+                                        <thead class="table-header">
+                                        <tr>
+                                            <td></td>
+                                            <td style="width: 40px;">LOGO</td>
+                                            <td>模块名称</td>
+                                            <td>模块类型</td>
+                                            <td>负责人</td>
+                                            <td>简介</td>
+                                        </tr>
+                                        </thead>
+                                        <tbody class="table-body">
+                                        <tr ng-show="!beans || !beans.data">
+                                            <td colspan="6" class="text-center">没有查询到数据！</td>
+                                        </tr>
+                                        <tr bindonce ng-repeat="foo in beans.data" ng-click="$parent.selected=foo"
+                                            ng-class="{picked:$parent.selected.id===foo.id}">
+                                            <td>
+                                                <input type="radio" ng-model="$parent.selected" ng-value="foo"/>
+                                            </td>
+                                            <td style="width: 40px;">
+                                                <img ng-src="{{foo.logoUrl}}"
+                                                     alt="LOGO" width="40" height="40"/>
+                                            </td>
+                                            <td bo-text="foo.name"></td>
+                                            <td bo-text="foo.typeName"></td>
+                                            <td bo-text="foo.ownerName"></td>
+                                            <td bo-text="foo.summary|substr:30"></td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="list-pagination" eccrm-page="pager" style="z-index: 1;"></div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" ng-cloak class="btn btn-default btn-primary" ng-click="confirm();"
+                        ng-disabled="!selected">确定
+                </button>
+                <button type="button" class="btn btn-default" ng-click="$hide()">关闭</button>
+            </div>
+        </div>
+    </div>
+</div>
+

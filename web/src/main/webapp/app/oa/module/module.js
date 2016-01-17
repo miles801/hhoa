@@ -32,6 +32,55 @@
         })
     });
 
+    app.service('ModuleModal', function ($modal, CommonUtils, ModuleService) {
+        return {
+            pick: function (callback) {
+                var modal = $modal({
+                    template: CommonUtils.contextPathURL('/app/oa/module/list/modal-employee.ftl.html'),
+                    backdrop: 'static'
+                });
+                var $scope = modal.$scope;
+                $scope.pager = {
+                    limit: 5,
+                    fetch: function () {
+                        return CommonUtils.promise(function (defer) {
+                            var obj = angular.extend({}, $scope.condition, {
+                                start: $scope.pager.start,
+                                limit: $scope.pager.limit,
+                                status: 'ACTIVE'
+                            });
+                            var promise = ModuleService.pageQuery(obj);
+                            CommonUtils.loading(promise, '加载中...', function (data) {
+                                data = data.data || {};
+                                $scope.beans = data;
+                                // set logo url
+                                angular.forEach($scope.beans.data||[],function(o){
+                                    if(o.logo) {
+                                        o.logoUrl = CommonUtils.contextPathURL('/attachment/view?id=' + o.logo);
+                                    }
+                                });
+                                defer.resolve(data.total);
+                            }, $scope);
+                        });
+                    }
+                };
+
+                // 查询
+                $scope.query = function () {
+                    $scope.pager.query();
+                };
+
+                // 点击确认
+                $scope.confirm = function () {
+                    if (angular.isFunction(callback)) {
+                        callback.call($scope, $scope.selected);
+                        modal.hide();
+                    }
+                }
+            }
+        }
+    });
+
     app.service('ModuleParam', function (ParameterLoader) {
         return {
             /**
