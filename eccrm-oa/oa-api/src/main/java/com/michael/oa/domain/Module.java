@@ -47,6 +47,25 @@ public class Module extends CommonDomain implements AttachmentSymbol {
     // 最后发帖时间
     private Date articleLastTime;
 
+    // 最后发帖人
+    private String articleLastPId;
+    private String articleLastPName;
+
+    public String getArticleLastPId() {
+        return articleLastPId;
+    }
+
+    public void setArticleLastPId(String articleLastPId) {
+        this.articleLastPId = articleLastPId;
+    }
+
+    public String getArticleLastPName() {
+        return articleLastPName;
+    }
+
+    public void setArticleLastPName(String articleLastPName) {
+        this.articleLastPName = articleLastPName;
+    }
 
     public Integer getArticleCounts() {
         return articleCounts;

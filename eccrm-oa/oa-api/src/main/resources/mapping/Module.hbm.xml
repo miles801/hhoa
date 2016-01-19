@@ -17,6 +17,8 @@
         <property name="ownerName" column="OWNER_NAME" type="string" length="50"/>
         <property name="articleCounts" column="ART_COUNTS" type="int"/>
         <property name="articleLastTime" column="ART_LAST_TIME" type="timestamp"/>
+        <property name="articleLastPId" column="ART_P_ID" type="string" length="40"/>
+        <property name="articleLastPName" column="ART_P_NAME" type="string" length="40"/>
 
 
         <!-- 公共属性 -->

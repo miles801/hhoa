@@ -9,11 +9,10 @@
         'oa.module'
     ]);
 
-    app.controller('Ctrl', function ($scope, CommonUtils, AlertFactory, ArticleService, ArticleParam, ModuleModal) {
+    app.controller('Ctrl', function ($scope, CommonUtils, AlertFactory, ArticleService, ArticleParam, ModuleService, ModuleModal) {
 
         var pageType = $('#pageType').val();
         var id = $('#id').val();
-
         // 状态
         ArticleParam.status(function (data) {
             $scope.status = data;
@@ -85,8 +84,24 @@
             $scope.beans = {
                 authorId: CommonUtils.loginContext().id,
                 authorName: CommonUtils.loginContext().employeeName,
-                status: 'INACTIVE'
+                status: 'ACTIVE'
             };
+            // 如果在新建的时候指定了所属版块
+            var moduleId = $('#moduleId').val();
+            if (moduleId) {
+                var promise = ModuleService.get({id: moduleId}, function (data) {
+                    data = data.data;
+                    if (!data) {
+                        AlertFactory.error('错误的访问:版块[' + moduleId + ']不存在!');
+                        CommonUtils.delay(window.history.back, 3000);
+                        return;
+                    }
+                    $scope.beans.moduleId = data.id;
+                    $scope.beans.moduleName = data.name;
+                });
+                CommonUtils.loading(promise);
+
+            }
         } else if (pageType == 'modify') {
             $scope.load(id);
         } else if (pageType == 'detail') {

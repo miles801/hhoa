@@ -64,12 +64,12 @@
             font-weight: 700;
         }
 
-        #article-head2 {
+        .article-head2 {
             border-bottom: 1px dashed #C2D5E3;
             height: 35px;
             line-height: 35px;
             font-size: 12px;
-            width: 95%;
+            width: 98%;
             font-style: normal;
             margin: 5px auto auto;
             color: #444;
@@ -110,7 +110,7 @@
                     </td>
                     <td>
                         <div id="article-head" ng-bind="beans.title"></div>
-                        <div id="article-head2">
+                        <div class="article-head2">
                             发表于 <span style="margin-left: 8px;"
                                       ng-bind-template="{{beans.publishTime|eccrmDatetime}}"></span>
                         </div>
@@ -120,11 +120,15 @@
                 </thead>
                 <tbody>
                 <tr ng-repeat="foo in comments">
-                    <td>
+                    <td style="background-color:#E5EDF2;width: 220px;border-right:1px solid #C2D5E3;vertical-align: top;border-top:3px solid #C2D5E3;">
                         <div class="author">{{foo.creatorName}}</div>
                     </td>
-                    <td>
-
+                    <td style="border-top:3px solid #E5EDF2;padding: 0 20px 15px;">
+                        <div class="article-head2">
+                            发表于 <span style="margin-left: 8px;"
+                                      ng-bind-template="{{foo.createdDatetime|eccrmDatetime}}"></span>
+                        </div>
+                        <div eccrm-html="foo.content" style="padding: 20px 0;"></div>
                     </td>
                 </tr>
                 </tbody>

@@ -95,7 +95,7 @@
                     帖数：{{foo.articleCounts||0}}
                 </span>
                 <span>
-                    最后发表：{{foo.articleLastTime||''}}
+                    最后发表：{{foo.articleLastTime|eccrmDatetime}}
                 </span>
                 </div>
             </div>

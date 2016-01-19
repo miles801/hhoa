@@ -17,6 +17,9 @@
             // 更新
             update: {method: 'POST', params: {method: 'update', attachmentIds: '@attachmentIds'}, isArray: false},
 
+            // 阅读文章
+            view: {method: 'POST', params: {method: 'view', id: '@id'}, isArray: false},
+
             // 根据id查询信息
             get: {method: 'GET', params: {method: 'get', id: '@id'}, isArray: false},
 
@@ -38,6 +41,27 @@
 
             // 发布帖子
             publish: {method: 'POST', params: {method: 'publish', ids: '@ids'}, isArray: false}
+        })
+    });
+    app.service('CommentService', function (CommonUtils, $resource) {
+        return $resource(CommonUtils.contextPathURL('/oa/comment/:method'), {}, {
+            // 保存
+            save: {method: 'POST', params: {method: 'save'}, isArray: false},
+
+
+            // 分页查询
+            pageQuery: {
+                method: 'POST',
+                params: {
+                    method: 'pageQuery',
+                    limit: '@limit',
+                    start: '@start',
+                    orderBy: 'createdDatetime',
+                    reverse: 'true'
+                },
+                isArray: false
+            }
+
         })
     });
 

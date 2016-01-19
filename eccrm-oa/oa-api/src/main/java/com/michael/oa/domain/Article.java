@@ -51,7 +51,7 @@ public class Article extends CommonDomain implements AttachmentSymbol {
     // 评论数量
     private Integer commentCounts;
     // 最后访问时间
-    private String lastViewTime;
+    private Date lastViewTime;
     // 最后评论时间
     private Date lastCommentTime;
     // 最后一次进行评论的人
@@ -74,11 +74,11 @@ public class Article extends CommonDomain implements AttachmentSymbol {
         this.commentCounts = commentCounts;
     }
 
-    public String getLastViewTime() {
+    public Date getLastViewTime() {
         return lastViewTime;
     }
 
-    public void setLastViewTime(String lastViewTime) {
+    public void setLastViewTime(Date lastViewTime) {
         this.lastViewTime = lastViewTime;
     }
 

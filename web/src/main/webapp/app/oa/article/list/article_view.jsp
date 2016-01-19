@@ -83,6 +83,7 @@
             display: table-row;
         }
 
+
         .c .content table td {
             height: 30px;
             line-height: 30px;
@@ -119,7 +120,7 @@
                 </thead>
                 <tbody class="table-body">
                 <tr ng-show="!beans || !beans.total">
-                    <td colspan="4" class="text-center">暂无新帖！</td>
+                    <td colspan="5" class="text-center">暂无新帖！</td>
                 </tr>
                 <tr bindonce ng-repeat="foo in beans.data" ng-cloak>
                     <td class="text-left">
@@ -129,8 +130,8 @@
                     <td bo-text="foo.publishTime|eccrmDate"></td>
                     <td bo-text="(foo.commentCounts||0)+'/'+(foo.viewCounts||0)"></td>
                     <td>
-                        <div>{{foo.lastCommentName}}</div>
-                        <div>{{foo.lastCommentTime|eccrmDatetime}}</div>
+                        <div>{{foo.lastCommentName}} <span style="color: #aaa;margin-left:8px;">{{foo.lastCommentTime|eccrmDatetime}}</span>
+                        </div>
                     </td>
                 </tr>
                 </tbody>

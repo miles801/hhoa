@@ -41,6 +41,10 @@
             }
         };
 
+        $scope.add = function () {
+            window.location.href = CommonUtils.contextPathURL('/oa/article/add?moduleId=' + mid);
+        };
+
         // 查看
         $scope.view = function (id) {
             window.location.href = CommonUtils.contextPathURL('app/oa/article/list/article_content.jsp?id=' + id);

@@ -19,6 +19,13 @@
         <property name="moduleId" column="MODULE_ID" type="string" length="40" not-null="true"/>
         <property name="moduleName" column="MODULE_NAME" type="string" length="40" not-null="true"/>
 
+        <property name="viewCounts" column="VIEW_COUNTS" type="int"/>
+        <property name="commentCounts" column="C_COUNTS" type="int"/>
+        <property name="lastViewTime" column="LAST_VIEW_TIME" type="timestamp"/>
+        <property name="lastCommentTime" column="LAST_COMMENT_TIME" type="timestamp"/>
+        <property name="lastCommentId" column="LAST_COMMENT_ID" type="string" length="40"/>
+        <property name="lastCommentName" column="LAST_COMMENT_NAME" type="string" length="40"/>
+
         <!-- 公共属性 -->
         <property name="status" column="STATUS" type="string" length="40" not-null="true"/>
         <property name="creatorId" column="CREATOR_ID" type="string" length="40" update="false"/>

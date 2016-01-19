@@ -37,10 +37,6 @@
                                 ng-disabled="!form.$valid">
                             <span class="glyphicons disk_save"></span> 保存
                         </button>
-                        <button type="button" class="btn btn-green btn-min" ng-click="save(true)"
-                                ng-disabled="!form.$valid">
-                            <span class="glyphicons disk_open"></span> 保存并新建
-                        </button>
                     </c:if>
                     <c:if test="${pageType eq 'modify'}">
                         <button type="button" class="btn btn-green btn-min" ng-click="update()"
@@ -59,6 +55,7 @@
                     <div style="display: none;">
                         <input type="hidden" id="pageType" value="${pageType}"/>
                         <input type="hidden" id="id" value="${id}"/>
+                        <input type="hidden" id="moduleId" value="${moduleId}"/>
                     </div>
                     <div class="row">
                         <div class="form-label col-1-half">
@@ -107,13 +104,13 @@
                                validate validate-max-length="200"/>
                     </div>
                     <div class="row">
-                        <div class="form-label col-1-half">
+                        <%--<div class="form-label col-1-half">
                             <label validate-error="form.status">状态:</label>
                         </div>
                         <select ng-model="beans.status" class="col-2-half" name="status"
                                 ng-options="foo.value as foo.name for foo in status"
                                 validate validate-required>
-                        </select>
+                        </select>--%>
                         <div class="form-label col-1-half">
                             <label>作者:</label>
                         </div>
