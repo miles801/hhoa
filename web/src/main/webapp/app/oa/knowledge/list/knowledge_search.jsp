@@ -101,16 +101,29 @@
 
         .nomapping {
             text-align: center;
-            margin-top:20px;
+            margin-top: 20px;
         }
 
         .nomapping span {
             font-size: 18px;
             font-family: microsoft yahei;
         }
-        .nomapping span.error{
+
+        .nomapping span.error {
             color: #c00;
         }
+
+        .search-logo {
+            width: 100%;
+            padding-right: 100px;
+            text-align: center;
+        }
+        .search-logo span{
+            margin-left: -150px;
+            font-size: 26px;
+            color: #333333;
+        }
+
     </style>
     <script>
         window.angular.contextPathURL = '<%=contextPath%>';
@@ -123,6 +136,11 @@
     </div>
     <div>
         <div class="ta-c kn-search">
+            <div class="search-logo">
+                <img src="<%=contextPath%>/app/main/images/logo.png"/>
+                <span ng-cloak ng-if="'${type}'=='technology'">技术学堂</span>
+                <span ng-cloak ng-if="'${type}'=='business'">业务学堂</span>
+            </div>
             <span class="searchbox">
                 <input type="text" id="keywordsOrTitle" ng-model="condition.keywordsOrTitle" size="20">
                 <span ng-click="condition.keywordsOrTitle=null"></span>
