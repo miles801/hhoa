@@ -53,7 +53,7 @@
                         <h3 nav-click-slide=".nav_menus" >
 							<span class="menu-text" >
                                 <i class="icons-sj" ></i >
-								<a ng-click="addTab(level1.name,level1.url)" bo-text="level1.name" ></a >
+								<a ng-click="addTab(level1.name,level1.url,level1)" bo-text="level1.name" ></a >
 							</span >
 							<span class="menu-children" bo-show="level1.children.length>0" >
 								<span class="menu-children" style="position:relative" >
@@ -64,7 +64,7 @@
                         <ul class="nav_menus" >
                             <li bindonce ng-repeat="level2 in level1.children" bindonce >
                                 <div bo-if="level2.children && level2.children.length>0" >
-                                    <a nav-click-slide="div" style="cursor: pointer;" ng-click="addTab(level2.name,level2.url)" >
+                                    <a nav-click-slide="div" style="cursor: pointer;" ng-click="addTab(level2.name,level2.url,level2)" >
                                         <span bo-text="level2.name" class="menu-text" ></span >
 										<span class="menu-children" >
 											<span style="color:#1893dd;" >&#9660;</span >
@@ -72,7 +72,7 @@
                                     </a >
 
                                     <div style="margin-left: 10px;display: none;" bo-if="level2.children && level2.children.length>0" >
-                                        <a ng-click="addTab(level3.name,level3.url)" style="cursor: pointer;" bindonce ng-repeat="level3 in level2.children" >
+                                        <a ng-click="addTab(level3.name,level3.url,level3)" style="cursor: pointer;" bindonce ng-repeat="level3 in level2.children" >
                                             <span style="margin-right:3px;color:#1893dd;" >&#8627;</span >
                                             <span bo-text="level3.name" class="menu-text" ></span >
                                         </a >

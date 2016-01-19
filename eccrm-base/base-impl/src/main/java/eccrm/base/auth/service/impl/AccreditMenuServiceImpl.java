@@ -102,7 +102,7 @@ public class AccreditMenuServiceImpl implements AccreditMenuService, BeanWrapCal
      */
     private List<MenuVo> wrapToAccreditMenuVo(List<Menu> tree) {
         return BeanWrapBuilder.newInstance()
-                .addProperties(new String[]{"id", "name", "icon", "code", "type"})
+                .addProperties(new String[]{"id", "name", "icon", "code", "type","fullScreen"})
                 .setCallback(new BeanWrapCallback<Menu, MenuVo>() {
                     @Override
                     public void doCallback(Menu menu, MenuVo vo) {

@@ -19,6 +19,7 @@
         <property name="popInfo" column="POP_INFO" type="string" length="40"/>
         <many-to-one name="resource" class="Resource" column="RESOURCE_ID"/>
         <property name="show" column="IS_SHOW" type="boolean"/>
+        <property name="fullScreen" column="FULL_SCREEN" type="boolean"/>
 
         <!-- 公共属性 -->
         <property name="status" column="STATUS" type="string" length="40"/>

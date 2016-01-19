@@ -32,6 +32,17 @@ public class MenuVo extends CrmBaseVo {
     private String resourceId;
     private String resourceName;
 
+    // 是否全屏
+    private Boolean fullScreen;
+
+    public Boolean getFullScreen() {
+        return fullScreen;
+    }
+
+    public void setFullScreen(Boolean fullScreen) {
+        this.fullScreen = fullScreen;
+    }
+
     public String getResourceName() {
         return resourceName;
     }

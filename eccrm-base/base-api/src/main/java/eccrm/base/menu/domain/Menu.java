@@ -67,8 +67,19 @@ public class Menu extends CommonDomain implements PathTree<Menu, String>, Static
      */
     private String popInfo;
 
+    // 是否全屏
+    private Boolean fullScreen;
+
     @Transient
     private List<Menu> children;
+
+    public Boolean getFullScreen() {
+        return fullScreen;
+    }
+
+    public void setFullScreen(Boolean fullScreen) {
+        this.fullScreen = fullScreen;
+    }
 
     @Override
     public String getId() {

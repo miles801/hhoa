@@ -36,6 +36,13 @@
             if (!url) {
                 return;
             }
+            if (data && data.fullScreen == true) {
+                hideColbar(function () {
+                    $tab.hide();
+                    $iframe.attr('src', CommonUtils.contextPathURL(url)).show();
+                });
+                return;
+            }
             if ($iframe.is(":visible")) {
                 $iframe.hide();
             }
