@@ -45,6 +45,67 @@ public class Article extends CommonDomain implements AttachmentSymbol {
     @Length(max = 40, message = "关键字不能超过20个汉字!")
     private String keywords;
 
+    // 浏览量
+    private Integer viewCounts;
+
+    // 评论数量
+    private Integer commentCounts;
+    // 最后访问时间
+    private String lastViewTime;
+    // 最后评论时间
+    private Date lastCommentTime;
+    // 最后一次进行评论的人
+    private String lastCommentId;
+    private String lastCommentName;
+
+    public Integer getViewCounts() {
+        return viewCounts;
+    }
+
+    public void setViewCounts(Integer viewCounts) {
+        this.viewCounts = viewCounts;
+    }
+
+    public Integer getCommentCounts() {
+        return commentCounts;
+    }
+
+    public void setCommentCounts(Integer commentCounts) {
+        this.commentCounts = commentCounts;
+    }
+
+    public String getLastViewTime() {
+        return lastViewTime;
+    }
+
+    public void setLastViewTime(String lastViewTime) {
+        this.lastViewTime = lastViewTime;
+    }
+
+    public Date getLastCommentTime() {
+        return lastCommentTime;
+    }
+
+    public void setLastCommentTime(Date lastCommentTime) {
+        this.lastCommentTime = lastCommentTime;
+    }
+
+    public String getLastCommentId() {
+        return lastCommentId;
+    }
+
+    public void setLastCommentId(String lastCommentId) {
+        this.lastCommentId = lastCommentId;
+    }
+
+    public String getLastCommentName() {
+        return lastCommentName;
+    }
+
+    public void setLastCommentName(String lastCommentName) {
+        this.lastCommentName = lastCommentName;
+    }
+
     public String getSummary() {
         return summary;
     }

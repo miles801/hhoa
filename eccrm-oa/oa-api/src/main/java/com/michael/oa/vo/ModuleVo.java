@@ -30,6 +30,28 @@ public class ModuleVo extends CommonVo {
 
     private String statusName;
 
+    // 帖子数量
+    private Integer articleCounts;
+    // 最后发帖时间
+    private Date articleLastTime;
+
+
+    public Integer getArticleCounts() {
+        return articleCounts;
+    }
+
+    public void setArticleCounts(Integer articleCounts) {
+        this.articleCounts = articleCounts;
+    }
+
+    public Date getArticleLastTime() {
+        return articleLastTime;
+    }
+
+    public void setArticleLastTime(Date articleLastTime) {
+        this.articleLastTime = articleLastTime;
+    }
+
     public String getTypeName() {
         return typeName;
     }

@@ -15,6 +15,8 @@
         <property name="sequenceNo" column="SEQ_NO" type="int"/>
         <property name="ownerId" column="OWNER_ID" type="string" length="40"/>
         <property name="ownerName" column="OWNER_NAME" type="string" length="50"/>
+        <property name="articleCounts" column="ART_COUNTS" type="int"/>
+        <property name="articleLastTime" column="ART_LAST_TIME" type="timestamp"/>
 
 
         <!-- 公共属性 -->

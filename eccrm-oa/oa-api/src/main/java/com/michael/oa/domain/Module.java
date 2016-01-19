@@ -42,6 +42,28 @@ public class Module extends CommonDomain implements AttachmentSymbol {
     @Length(max = 50)
     private String ownerName;
 
+    // 帖子数量
+    private Integer articleCounts;
+    // 最后发帖时间
+    private Date articleLastTime;
+
+
+    public Integer getArticleCounts() {
+        return articleCounts;
+    }
+
+    public void setArticleCounts(Integer articleCounts) {
+        this.articleCounts = articleCounts;
+    }
+
+    public Date getArticleLastTime() {
+        return articleLastTime;
+    }
+
+    public void setArticleLastTime(Date articleLastTime) {
+        this.articleLastTime = articleLastTime;
+    }
+
     public String getName() {
         return name;
     }
