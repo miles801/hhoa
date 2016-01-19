@@ -71,7 +71,7 @@ public class ArticleDaoImpl extends HibernateDaoHelper implements ArticleDao {
         Assert.notNull(criteria, "criteria must not be null!");
         CriteriaUtils.addCondition(criteria, bo);
         if (bo != null && StringUtils.isNotEmpty(bo.getKeywords())) {
-            String keywords[] = bo.getKeywords().split("\\s|,");
+            String keywords[] = bo.getKeywords().split("\\s+|,");
             Disjunction disjunction = Restrictions.disjunction();
             for (String keyword : keywords) {
                 disjunction.add(Restrictions.like("keywords", keyword, MatchMode.ANYWHERE));

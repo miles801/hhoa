@@ -73,7 +73,7 @@ public class KnowledgeDaoImpl extends HibernateDaoHelper implements KnowledgeDao
         if (bo != null) {
             String keywordsOrTitle = bo.getKeywordsOrTitle();
             if (StringUtils.isNotEmpty(keywordsOrTitle)) {
-                String keywords[] = keywordsOrTitle.split("\\s|,");
+                String keywords[] = keywordsOrTitle.split("\\s+|,");
                 Disjunction disjunction = Restrictions.disjunction();
                 for (String keyword : keywords) {
                     disjunction.add(Restrictions.like("keywords", keyword, MatchMode.ANYWHERE));

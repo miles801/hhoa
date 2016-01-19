@@ -44,6 +44,11 @@
             CommonUtils.loading(promise, '保存中...');
         };
 
+        // 返回
+        $scope.back = function () {
+            CommonUtils.back();
+        };
+
         // 更新
         $scope.update = function () {
             var promise = ModuleService.update($scope.beans, function (data) {
@@ -61,7 +66,7 @@
         $scope.load = function (id, callback) {
             var promise = ModuleService.get({id: id}, function (data) {
                 $scope.beans = data.data || {};
-                if($scope.beans.logo) {
+                if ($scope.beans.logo) {
                     setLogo($scope.beans.logo);
                 }
                 angular.isFunction(callback) && callback();

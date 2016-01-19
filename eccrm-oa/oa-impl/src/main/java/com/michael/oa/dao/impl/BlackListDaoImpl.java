@@ -5,7 +5,11 @@ import com.michael.oa.dao.BlackListDao;
 import com.michael.oa.domain.BlackList;
 import com.ycrl.core.HibernateDaoHelper;
 import com.ycrl.core.hibernate.criteria.CriteriaUtils;
+import com.ycrl.utils.string.StringUtils;
 import org.hibernate.Criteria;
+import org.hibernate.criterion.Disjunction;
+import org.hibernate.criterion.MatchMode;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 import org.springframework.util.Assert;
 
@@ -66,6 +70,15 @@ public class BlackListDaoImpl extends HibernateDaoHelper implements BlackListDao
     private void initCriteria(Criteria criteria, BlackListBo bo) {
         Assert.notNull(criteria, "criteria must not be null!");
         CriteriaUtils.addCondition(criteria, bo);
+        // 多个关键字匹配
+        if (bo != null && StringUtils.isNotEmpty(bo.getKeywords())) {
+            String keyArr[] = bo.getKeywords().split("\\s+|,");
+            Disjunction disjunction = Restrictions.disjunction();
+            for (String keyword : keyArr) {
+                disjunction.add(Restrictions.like("keywords", keyword, MatchMode.ANYWHERE));
+            }
+            criteria.add(disjunction);
+        }
     }
 
 }

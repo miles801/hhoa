@@ -89,7 +89,6 @@
                                 <td>负责人</td>
                                 <td>简介</td>
                                 <td>描述</td>
-                                <td>状态</td>
                                 <td>操作</td>
                             </tr>
                             </thead>
@@ -108,7 +107,6 @@
                                 <td bo-text="foo.ownerName"></td>
                                 <td bo-text="foo.summary|substr:40"></td>
                                 <td bo-text="foo.description|substr:20"></td>
-                                <td bo-text="foo.statusName"></td>
                                 <td>
                                     <a class="cp" title="编辑" ng-click="modify(foo.id);">
                                         <i class="icons edit"></i>

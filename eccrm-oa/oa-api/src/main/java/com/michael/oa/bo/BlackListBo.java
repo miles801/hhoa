@@ -22,7 +22,6 @@ public class BlackListBo implements BO {
     @Condition(matchMode = MatchModel.LIKE, likeMode = LikeModel.ANYWHERE)
     private String reason;
 
-    @Condition(matchMode = MatchModel.LIKE, likeMode = LikeModel.ANYWHERE)
     private String keywords;
 
     public String getType() {

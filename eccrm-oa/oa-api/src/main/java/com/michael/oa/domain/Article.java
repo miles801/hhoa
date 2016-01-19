@@ -15,7 +15,7 @@ import java.util.Date;
 public class Article extends CommonDomain implements AttachmentSymbol {
 
     @NotNull(message = "标题")
-    @Length(max = 100, min = 4, message = "标题必须是2-50个汉字!")
+    @Length(max = 50, min = 2, message = "标题必须是2-50个汉字!")
     private String title;
 
     @NotNull(message = "所属模块")
