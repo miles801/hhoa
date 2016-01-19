@@ -1,7 +1,7 @@
-<div class="form-label col-1-half" ng-if="options.showLabel" >
+<div class="form-label col-1-half" ng-if="options.showLabel" ng-cloak>
     <label >{{options.labelText}}:</label >
 </div >
-<div ng-class="{'col-10-half':options.showLabel,'col-12':!options.showLabel}" >
+<div ng-class="{'col-10-half':options.showLabel,'col-12':!options.showLabel}" ng-cloak>
     <div class="row" ng-show="options.maxFile > (attachments.length || 0) " ng-if="!options.readonly" >
         <input type="file" class="col-4" >
     </div >

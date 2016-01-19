@@ -268,7 +268,6 @@ SWFOption.prototype = {
                     scope.deleteAttachment = function (index, id) {
                         scope.content = '附件删除后,将不可恢复,请确认删除!';
                         ModalFactory.remove(scope, function () {
-                            fileupload.uplodify('cancel', id, true);
                             $http.get(CommonUtils.contextPathURL('/attachment/delete?ids=' + id))
                                 .success(function (data) {
                                     if (data && data.success) {
@@ -317,7 +316,7 @@ SWFOption.prototype = {
                                     if (attachments.length > 0) {
                                         var url = CommonUtils.contextPathURL('/attachment/delete?ids=' + this.getAttachment().join(','));
                                         $http.get(url).success(function () {
-                                            fileupload.uploadify('cancel', '*');
+                                            //fileupload.uploadify('cancel', '*');
                                             attachments.length = 0;
                                         }).error(function () {
                                             alert('附件清除失败!');
@@ -338,7 +337,7 @@ SWFOption.prototype = {
                                         var url = CommonUtils.contextPathURL('/attachment/delete?ids=' + ids.join(','));
                                         $http.get(url).success(function () {
                                             angular.forEach(function (ids, id) {
-                                                fileupload.uploadify('cancel', id, true);
+                                                //fileupload.uploadify('cancel', id, true);
                                                 scope.attachments.splice($.inArray(id, attachments), 1);
                                             });
                                             angular.isFunction(callback) && callback();
