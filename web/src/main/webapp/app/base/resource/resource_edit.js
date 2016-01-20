@@ -76,10 +76,10 @@
                 var promise = ResourceService.hasName({
                     id: CommonUtils.parse($scope.resource, "parent.id"),
                     name: encodeURI(encodeURI($scope.resource.name))
+                }, function (data) {
+                    !data.data ? context.resolve() : context.reject('名称重复!');
                 });
-                CommonUtils.loading(promise, '校验名称的合法性...', function (data) {
-                    !data.data ? context.resolve() : context.reject();
-                });
+                CommonUtils.loading(promise, '校验名称的合法性...');
             });
             // 检查编号是否合法
             checks.push(function () {
@@ -91,7 +91,7 @@
                 var promise = ResourceService.hasCode({
                     code: encodeURI(encodeURI($scope.resource.code))
                 }, function (data) {
-                    !data.data ? context.resolve() : context.reject();
+                    !data.data ? context.resolve() : context.reject('编号重复!');
                 });
                 CommonUtils.loading(promise, '校验编号的合法性...');
             });
