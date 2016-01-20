@@ -71,7 +71,7 @@
     </style>
 </head>
 <body>
-<div class="main" ng-app="oa.module.view" ng-controller="Ctrl">
+<div class="main" ng-app="oa.module.view" ng-controller="Ctrl" style="overflow: auto;">
     <div class="wrap">
         <div class="c" ng-repeat="foo in beans.data" ng-cloak>
             <div class="c1">
