@@ -114,7 +114,7 @@ public class LoginCtrl {
                 throw new RuntimeException("无法获得" + AccreditFuncService.class.getName() + "的实例对象，无法查询个人权限!");
             }
             List<String> resourceCodes = funcService.queryPersonalResourceCode();
-            redisClient.hset("PF:", empId, GsonUtils.toJson(resourceCodes.toArray(new String[resourceCodes.size()])));
+            redisClient.sadd("PF:" + empId, resourceCodes.toArray(new String[resourceCodes.size()]));
 
             // 保存数据授权：PD:empId,资源编号,授权明细
             AccreditDataService ads = systemContainer.getBean(AccreditDataService.class);
