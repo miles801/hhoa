@@ -44,7 +44,7 @@
                 <prop key="hibernate.jdbc.batch_size">${db.hibernate.batchSize}</prop>
                 <prop key="hibernate.show_sql">${db.hibernate.showSql}</prop>
                 <prop key="hibernate.format_sql">${db.hibernate.formatSql}</prop>
-                <prop key="hibernate.default_schema">${db.hibernate.schema}</prop>
+                <prop key="hibernate.default_schema">#{${db.hibernate.schema}?:''}</prop>
             </props>
         </property>
         <property name="entityInterceptor" ref="hibernateInterceptor"/>

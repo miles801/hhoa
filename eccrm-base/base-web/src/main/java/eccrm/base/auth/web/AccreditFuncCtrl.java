@@ -1,20 +1,24 @@
 package eccrm.base.auth.web;
 
+import com.michael.cache.redis.RedisCommand;
+import com.michael.cache.redis.RedisServer;
+import com.ycrl.core.SystemContainer;
+import com.ycrl.core.context.SecurityContext;
 import com.ycrl.core.web.BaseController;
-import eccrm.base.auth.domain.AccreditFunc;
-import eccrm.base.auth.service.AccreditFuncService;
 import com.ycrl.utils.gson.GsonUtils;
+import eccrm.base.auth.service.AccreditFuncService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import redis.clients.jedis.ShardedJedis;
+import redis.clients.jedis.ShardedJedisPool;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
-import java.util.Map;
 
 /**
  * @author Michael
@@ -59,14 +63,16 @@ public class AccreditFuncCtrl extends BaseController {
     @SuppressWarnings("unchecked")
     @ResponseBody
     @RequestMapping(value = "/hasPermission", params = {"code"}, method = RequestMethod.GET)
-    public void hasPermission(@RequestParam String code,
+    public void hasPermission(@RequestParam final String code,
                               HttpServletRequest request,
                               HttpServletResponse response) {
-        Map<String, Boolean> resources = (Map<String, Boolean>) request.getSession().getAttribute(AccreditFunc.ACCREDIT_FUNCTION_CODE);
-        if (resources != null && resources.containsKey(code)) {
-            GsonUtils.printData(response, true);
-        } else {
-            GsonUtils.printData(response, false);
-        }
+        RedisServer redisServer = SystemContainer.getInstance().getBean(RedisServer.class);
+        GsonUtils.printData(response, redisServer.execute(new RedisCommand<Boolean>() {
+            @Override
+            public Boolean invoke(ShardedJedis shardedJedis, ShardedJedisPool pool) {
+                String pfKey = "PF:" + SecurityContext.getEmpId();
+                return shardedJedis.sismember(pfKey, code);
+            }
+        }));
     }
 }

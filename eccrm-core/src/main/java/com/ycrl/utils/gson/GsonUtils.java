@@ -37,6 +37,11 @@ public class GsonUtils {
         return toJsonExclude(obj);
     }
 
+    public static <T> T fromJson(String json, Class<T> clazz) {
+        Gson gson = createGson(null, null);
+        return gson.fromJson(json, clazz);
+    }
+
     /**
      * 将一个对象转成json字符串并指定需要排除的属性名称列表
      * 如果没有指定属性名称集合，则将会全部转换
@@ -49,12 +54,18 @@ public class GsonUtils {
     public static String toJsonExclude(Object obj, String... exclusionFields) {
         validateJsonObject(obj);
         //创建GsonBuilder
+        Gson gson = createGson(null, exclusionFields);
+        return gson.toJson(obj);
+    }
+
+    private static Gson createGson(String[] inclusionFields, String[] exclusionFields) {
         GsonBuilder builder = new GsonBuilder();
 
         //设置时间格式
         builder.registerTypeAdapter(Date.class, new DateConverter());
         builder.registerTypeAdapter(java.sql.Date.class, new DateConverter());
         builder.registerTypeAdapterFactory(HibernateProxyNullAdapter.FACTORY);
+
         //设置需要被排除的属性列表
         if (exclusionFields != null && exclusionFields.length > 0) {
             GsonExclusion gsonFilter = new GsonExclusion();
@@ -62,9 +73,14 @@ public class GsonUtils {
             builder.setExclusionStrategies(gsonFilter);
         }
 
+        //设置需要转换的属性名称
+        if (inclusionFields != null && inclusionFields.length > 0) {
+            GsonInclusion gsonFilter = new GsonInclusion();
+            gsonFilter.addInclusionFields(inclusionFields);
+            builder.setExclusionStrategies(gsonFilter);
+        }
         //创建Gson并进行转换
-        Gson gson = builder.create();
-        return gson.toJson(obj);
+        return builder.create();
     }
 
     /**
@@ -78,20 +94,9 @@ public class GsonUtils {
      */
     public static String toJsonInclude(Object obj, String... includeFields) {
         validateJsonObject(obj);
-        //创建GsonBuilder
-        GsonBuilder builder = new GsonBuilder();
-
-        //设置时间格式
-        builder.registerTypeAdapter(Date.class, new DateConverter());
-        //设置需要转换的属性名称
-        if (includeFields != null && includeFields.length > 0) {
-            GsonInclusion gsonFilter = new GsonInclusion();
-            gsonFilter.addInclusionFields(includeFields);
-            builder.setExclusionStrategies(gsonFilter);
-        }
 
         //创建Gson并进行转换
-        Gson gson = builder.create();
+        Gson gson = createGson(includeFields, null);
         return gson.toJson(obj);
     }
 

@@ -9,6 +9,7 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.web.context.ContextLoader;
 import org.springframework.web.context.WebApplicationContext;
+import redis.clients.jedis.ShardedJedisPool;
 
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
@@ -118,7 +119,14 @@ public class SpringContextLoader extends ContextLoader implements ServletContext
         container.execute(servletContextEvent.getServletContext());
         logger.info("系统即将关闭，开始调用已注册的卸载程序....OK");
 
+        // 关闭redis
+        ShardedJedisPool redisPool = SystemContainer.getInstance().getBean(ShardedJedisPool.class);
+        if (redisPool != null) {
+            redisPool.destroy();
+        }
+
         // 关闭线程池
         ThreadPool.getInstance().shutdown();
+
     }
 }

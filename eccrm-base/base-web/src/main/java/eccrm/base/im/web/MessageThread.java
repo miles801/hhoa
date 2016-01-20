@@ -1,12 +1,13 @@
 package eccrm.base.im.web;
 
-import com.michael.cache.core.CacheProvider;
+import com.michael.cache.redis.RedisServer;
 import com.ycrl.core.SystemContainer;
 import com.ycrl.utils.gson.GsonUtils;
-import com.ycrl.utils.string.StringUtils;
+import redis.clients.jedis.ShardedJedis;
 
 import javax.servlet.AsyncContext;
 import javax.servlet.http.HttpServletResponse;
+import java.util.List;
 
 /**
  * @author Michael
@@ -23,16 +24,16 @@ public class MessageThread implements Runnable {
 
     @Override
     public void run() {
-        CacheProvider cacheProvider = SystemContainer.getInstance().getBean(CacheProvider.class);
-        if (cacheProvider == null) {
+        RedisServer redisServer = SystemContainer.getInstance().getBean(RedisServer.class);
+        if (redisServer == null) {
             return;
         }
-        String messageKey = "message:" + userId + ":";
+        String messageKey = "MSG:" + userId;    // 消息
+        ShardedJedis redisClient = redisServer.getRedisClient();
         int i = 0;
         while (i++ < 1000) {
-            String messages = cacheProvider.popList(messageKey);
-            if (StringUtils.isNotEmpty(messages)) {
-                System.out.println("获取到消息:"+messages);
+            List<String> messages = redisClient.lrange(messageKey, 0, -1);
+            if (messages != null && !messages.isEmpty()) {
                 GsonUtils.printData((HttpServletResponse) context.getResponse(), messages);
                 context.complete();
                 return;
@@ -44,8 +45,9 @@ public class MessageThread implements Runnable {
             }
         }
         // 自然结束，没有读取到消息
-        GsonUtils.printSuccess((HttpServletResponse) context.getResponse());
+        GsonUtils.printData((HttpServletResponse) context.getResponse(), new String[]{});
         context.complete();
+        redisClient.close();
     }
 
 }

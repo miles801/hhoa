@@ -1,6 +1,7 @@
 package eccrm.base.im.service.impl;
 
-import com.michael.cache.core.CacheProvider;
+import com.michael.cache.redis.RedisCommand;
+import com.michael.cache.redis.RedisServer;
 import com.ycrl.core.SystemContainer;
 import com.ycrl.core.beans.BeanWrapBuilder;
 import com.ycrl.core.beans.BeanWrapCallback;
@@ -21,7 +22,10 @@ import eccrm.base.im.service.NewsService;
 import eccrm.base.im.vo.NewsVo;
 import eccrm.base.parameter.service.ParameterContainer;
 import eccrm.base.position.dao.PositionEmpDao;
+import org.hibernate.cache.CacheProvider;
 import org.springframework.stereotype.Service;
+import redis.clients.jedis.ShardedJedis;
+import redis.clients.jedis.ShardedJedisPool;
 
 import javax.annotation.Resource;
 import javax.persistence.EntityNotFoundException;
@@ -206,7 +210,7 @@ public class NewsServiceImpl implements NewsService, BeanWrapCallback<News, News
 
         // 根据接收对象，分配给真正的接收者
         CacheProvider cacheProvider = SystemContainer.getInstance().getBean(CacheProvider.class);
-        for (NewsRealReceiver nrr : newsRealReceivers) {
+        for (final NewsRealReceiver nrr : newsRealReceivers) {
             nrr.setNewsId(news.getId());
             nrr.setNewsTitle(news.getTitle());
             nrr.setCategory(news.getCategory());
@@ -217,7 +221,14 @@ public class NewsServiceImpl implements NewsService, BeanWrapCallback<News, News
             newsRealReceiverDao.save(nrr);
 
             // 添加到消息池中
-            cacheProvider.addToList("message:" + nrr.getReceiverId() + ":", GsonUtils.toJson(nrr));
+            RedisServer redisServer = SystemContainer.getInstance().getBean(RedisServer.class);
+            redisServer.execute(new RedisCommand<Object>() {
+                @Override
+                public Object invoke(ShardedJedis shardedJedis, ShardedJedisPool pool) {
+                    shardedJedis.rpush("MSG:" + nrr.getReceiverId(), GsonUtils.toJson(nrr));
+                    return null;
+                }
+            });
         }
 
     }

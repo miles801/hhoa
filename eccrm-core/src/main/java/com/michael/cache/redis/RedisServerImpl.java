@@ -27,7 +27,14 @@ public class RedisServerImpl implements RedisServer {
         return shardedJedisPool.getResource();
     }
 
-    public void setShardedJedisPool(ShardedJedisPool shardedJedisPool) {
-        this.shardedJedisPool = shardedJedisPool;
+    @Override
+    public <T> T execute(RedisCommand<T> command) {
+        ShardedJedis jedis = shardedJedisPool.getResource();
+        T o = command.invoke(jedis, shardedJedisPool);
+        if (!shardedJedisPool.isClosed()) {
+            jedis.close();
+        }
+        return o;
     }
+
 }
