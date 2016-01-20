@@ -67,11 +67,8 @@
                     <span>黑户</span>
                 </div>
                 <span class="header-button">
-                        <a type="button" class="btn btn-green btn-min" ng-click="add()">
-                            <span class="glyphicons plus"></span>
-                            新建
-                        </a>
-                        <button type="button" class="btn btn-green btn-min" ng-click="remove()" ng-cloak
+                        <button type="button" class="btn btn-green btn-min" style="top: 3px;position: relative;"
+                                ng-click="remove()" ng-cloak
                                 ng-disabled="!anyone">
                             <span class="glyphicons remove"></span>
                             删除

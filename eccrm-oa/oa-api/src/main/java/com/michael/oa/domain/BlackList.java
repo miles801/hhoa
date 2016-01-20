@@ -34,6 +34,7 @@ public class BlackList extends CommonDomain {
 
     // 关键字
     @Length(max = 100)
+    @NotNull(message = "客户号码不能为空!")
     private String keywords;
 
     public String getKeywords() {

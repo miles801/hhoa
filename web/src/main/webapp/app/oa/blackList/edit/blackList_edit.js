@@ -22,7 +22,6 @@
         $scope.save = function (createNew) {
             var promise = BlackListService.save($scope.beans, function (data) {
                 if (data && data['success'] == true) { //保存成功
-                    CommonUtils.addTab('update');
                     if (createNew === true) {
                         $scope.beans = {type: $scope.beans.type};
                     } else {
@@ -40,7 +39,6 @@
         $scope.update = function () {
             var promise = BlackListService.update($scope.beans, function (data) {
                 if (data && data['success'] == true) { // 更新成功
-                    CommonUtils.addTab('update');
                     $scope.form.$setValidity('committed', false);
                     CommonUtils.back();
                 }
@@ -57,6 +55,10 @@
             CommonUtils.loading(promise, 'Loading...');
         };
 
+        // 返回
+        $scope.back = function () {
+            CommonUtils.back();
+        };
 
         if (pageType == 'add') {
             $scope.beans = {};

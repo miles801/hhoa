@@ -12,7 +12,7 @@
         <property name="name" column="CUS_NAME" type="string" length="60" not-null="true"/>
         <property name="info" column="CUS_INFO" type="string" length="100"/>
         <property name="reason" column="CUS_REASON" type="string" length="1000"/>
-        <property name="keywords" column="CUS_KEYWORDS" type="string" length="100"/>
+        <property name="keywords" column="CUS_KEYWORDS" type="string" length="100" not-null="true"/>
 
         <!-- 公共属性 -->
         <property name="creatorId" column="CREATOR_ID" type="string" length="40" update="false"/>
