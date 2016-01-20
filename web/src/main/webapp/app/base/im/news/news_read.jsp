@@ -5,7 +5,7 @@
 <!DOCTYPE html >
 <html >
 <head >
-    <title >新闻公告</title >
+    <title>公司公告</title>
     <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE8" />
     <link rel="stylesheet" type="text/css" href="<%=contextPath%>/vendor/bootstrap-v3.0/css/bootstrap.min.css" >
     <link rel="stylesheet" type="text/css" href="<%=contextPath%>/style/standard/css/eccrm-common-new.css" >
@@ -27,7 +27,7 @@
             <div class="block-header" >
                 <span class="header-text" >
                     <span class="glyphicons search" ></span >
-                        <span >新闻公告</span >
+                        <span>公司公告</span>
                 </span >
                 <span class="header-button" >
                     <button type="button" class="btn btn-green btn-min" ng-click="query();" >
@@ -60,7 +60,7 @@
             <div class="block-header" >
                 <div class="header-text" >
                     <span class="glyphicons list" ></span >
-                    <span >新闻公告列表</span >
+                    <span>公司公告列表</span>
                 </div >
             <span class="header-button" >
             </span >

@@ -14,7 +14,7 @@ Date: 2014-01-14 11:23:09
 <!DOCTYPE html >
 <html >
 <head >
-    <title >编辑新闻公告</title >
+    <title>编辑公司公告</title>
     <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE8" />
     <link rel="stylesheet" type="text/css" href="<%=contextPath%>/vendor/bootstrap-v3.0/css/bootstrap.min.css" >
     <link rel="stylesheet" type="text/css" href="<%=contextPath%>/style/standard/css/eccrm-common-new.css" >
