@@ -37,7 +37,7 @@
     var contextPath = $('#contextPath').val();
     app.config(['$routeProvider', function ($routeProvider) {
         $routeProvider
-            // 菜单授权
+        // 菜单授权
             .when('/menu', {
                 templateUrl: contextPath + 'app/base/accredit/template/accredit_menu.html',
                 controller: 'AccreditMenuCtrl'
@@ -246,7 +246,9 @@
                 deptId: currentNode.id,
                 resources: checkedResource
             }, function (data) {
-                if (!data.success) {
+                if (data.success) {
+                    AlertFactory.success(null, '授权成功!');
+                } else {
                     AlertFactory.error($scope, data.fail || data.error);
                 }
                 // 恢复操作按钮
