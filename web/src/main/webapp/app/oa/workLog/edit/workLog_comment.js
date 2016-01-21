@@ -10,6 +10,8 @@
     app.controller('Ctrl', function ($scope, CommonUtils, WorkLogService, $http, AlertFactory, WorkLogCommentService) {
         $scope.condition = {};
 
+        $scope.date = '';
+
         $scope.hasCommentRight = false;
 
         // 查询是否具有评论权限
@@ -21,6 +23,58 @@
         //查询数据
         $scope.query = function () {
             $scope.pager.query();
+        };
+
+        var current = null;
+        $scope.showContent = function (foo) {
+            if (current) {
+                current.show = false;
+            }
+            current = foo;
+            foo.show = true;
+
+            // 加载评论
+            if (foo.commentCounts > 0 && !foo.comments) {
+                $scope.loadComment(foo);
+            }
+        };
+
+        // 按人查询
+        $scope.queryWithAuth = function (creatorId) {
+            $scope.condition.creatorId = creatorId;
+            $scope.queryWithDate(null);
+        };
+
+        // 按时间查询
+        $scope.queryWithDate = function (date) {
+            var time;
+            if (date) {
+                var d = new Date(moment(date).startOf('day'));
+                // 如果时间是同一天则不执行查询
+                time = moment(d).format('YYYY-MM-DD');
+                if (time == $scope.date) {
+                    return;
+                }
+                // 组合查询条件
+                $scope.condition.startDate = d.getTime();
+                $scope.condition.endDate = $scope.condition.startDate + 24 * 60 * 60 * 1000;
+            } else {
+                $scope.condition.startDate = null;
+                $scope.condition.endDate = null;
+            }
+            // 动画效果，查询
+            var $main = $('.main');
+            $main.animate({
+                width: 0
+            }, 300, function () {
+                $scope.date = time;   // 延迟触发变更
+                $scope.query();
+                $main.hide().width('100%');
+                CommonUtils.delay(function () {
+                    $main.fadeIn(500);
+                    $main.css('overflow', 'auto');
+                }, 100);
+            });
         };
 
         // 延迟触发发日志时的blur
@@ -66,12 +120,6 @@
                     var promise = WorkLogService.pageQuery(param, function (data) {
                         param = null;
                         $scope.beans = data.data || {total: 0};
-                        // 加载评论
-                        angular.forEach($scope.beans.data || [], function (o) {
-                            if (o.commentCounts > 0) {
-                                $scope.loadComment(o);
-                            }
-                        });
                         defer.resolve($scope.beans);
                     });
                     CommonUtils.loading(promise, 'Loading...');
