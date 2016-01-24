@@ -3,6 +3,7 @@
     var app = angular.module('eccrm.main', [
         'eccrm.angular',
         'eccrm.angularstrap',
+        'eccrm.base.user.password.modal',   // 修改密码
         'eccrm.im.news'        // 新闻
     ]);
 
@@ -25,7 +26,7 @@
         }
     });
 
-    app.controller('MainController', function ($scope, $http, $timeout, CommonUtils, AlertFactory, AsideFactory) {
+    app.controller('MainController', function ($scope, $http, PasswordModal, $timeout, CommonUtils, AlertFactory, AsideFactory) {
         $scope.menus = []; // 菜单
 
         $scope.subMenus = [];// 子菜单
@@ -160,13 +161,14 @@
 
         };
 
-        /*$timeout(function showOnlineNotice() {
-         NewsService.queryPersonalUnreadNews({start: 0, limit: 10}, function (data) {
-         data = data.data || {};
-         $scope.beans = data.data || [];
-         $timeout(showOnlineNotice, 1000 * 30);  // 30秒一次
-         });
-         }, 1000);*/
+        $scope.updatePwd = function () {
+            PasswordModal.modifyPwd({
+                scope: $scope, callback: function () {
+                    AlertFactory.success(null, '密码修改成功!重新登录有生效!');
+                }
+            });
+        };
+
         var getMessage = function () {
             $.ajax({
                 url: CommonUtils.contextPathURL('/servlet/message'),
@@ -184,7 +186,7 @@
                 },
                 error: function () {
                     //alert('错误');
-                    getMessage();
+                    //getMessage();
                 }
             });
         };

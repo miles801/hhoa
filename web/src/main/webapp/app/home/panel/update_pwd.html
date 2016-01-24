@@ -30,7 +30,8 @@
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default btn-primary" ng-click="checkPassword()" ng-disabled="!form.$valid">
+                <button type="button" class="btn btn-default btn-primary" ng-click="checkPassword()"
+                        ng-disabled="!form.$valid||beans.redoPassword!=beans.newPassword">
                     确认
                 </button>
                 <button type="button" class="btn btn-default" ng-click="$hide()">关闭</button>

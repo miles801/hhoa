@@ -3,14 +3,16 @@ package eccrm.base.user.web;
 import com.google.gson.JsonObject;
 import com.ycrl.core.context.SecurityContext;
 import com.ycrl.core.pager.PageVo;
+import com.ycrl.core.web.BaseController;
+import com.ycrl.utils.gson.GsonUtils;
+import com.ycrl.utils.gson.JsonObjectUtils;
+import com.ycrl.utils.gson.ResponseData;
 import eccrm.base.user.bo.UserBo;
 import eccrm.base.user.domain.User;
 import eccrm.base.user.service.UserService;
 import eccrm.base.user.vo.UserVo;
 import eccrm.core.constant.JspAccessType;
-import com.ycrl.core.web.BaseController;
 import eccrm.utils.StringUtils;
-import com.ycrl.utils.gson.GsonUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -138,9 +140,10 @@ public class UserCtrl extends BaseController {
     @ResponseBody
     public void updatePassword(HttpServletRequest request, HttpServletResponse response) {
         JsonObject jsonObject = GsonUtils.wrapDataToEntity(request, JsonObject.class);
-        String password = jsonObject.get("password").getAsString();
-        userService.updatePassword(SecurityContext.getUserId(), password);
-        GsonUtils.printSuccess(response);
+        String oldPwd = JsonObjectUtils.getStringProperty(jsonObject, "oldPwd");
+        String newPwd = JsonObjectUtils.getStringProperty(jsonObject, "newPwd");
+        ResponseData responseData = userService.updatePassword(oldPwd, newPwd);
+        GsonUtils.printJsonObject(response, responseData);
     }
 
     @RequestMapping(value = "/reset-pwd", method = RequestMethod.POST, params = "ids")

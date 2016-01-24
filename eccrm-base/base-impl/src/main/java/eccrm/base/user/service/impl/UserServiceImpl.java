@@ -3,6 +3,7 @@ package eccrm.base.user.service.impl;
 import com.ycrl.core.beans.BeanWrapBuilder;
 import com.ycrl.core.context.SecurityContext;
 import com.ycrl.core.pager.PageVo;
+import com.ycrl.utils.gson.ResponseData;
 import eccrm.base.parameter.service.ParameterContainer;
 import eccrm.base.tenement.dao.TenementDao;
 import eccrm.base.tenement.domain.Tenement;
@@ -25,6 +26,7 @@ import eccrm.utils.md5.MD5Utils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.util.Assert;
 
 import javax.annotation.Resource;
 import javax.persistence.EntityNotFoundException;
@@ -138,9 +140,21 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void updatePassword(String id, String password) {
-        PasswordPolicy passwordPolicy = policyDao.get();
-        userDao.updatePassword(id, password, new PasswordPolicyHelper(passwordPolicy).nextDeadline());
+    public ResponseData updatePassword(String oldPwd, String newPwd) {
+        Assert.hasText(oldPwd);
+        Assert.hasText(newPwd);
+        User user = userDao.findByUsername(SecurityContext.getUsername());
+        Assert.notNull(user, "更改密码失败：用户不存在!");
+        ResponseData responseData = new ResponseData();
+        if (!oldPwd.equals(user.getPassword())) {
+            responseData.setFail(true);
+            responseData.setMessage("密码错误!");
+        } else {
+            PasswordPolicy passwordPolicy = policyDao.get();
+            userDao.updatePassword(user.getId(), newPwd, new PasswordPolicyHelper(passwordPolicy).nextDeadline());
+            responseData.setSuccess(true);
+        }
+        return responseData;
     }
 
 

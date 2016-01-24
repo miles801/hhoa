@@ -17,7 +17,7 @@ public interface PasswordPolicyDao {
     void update(PasswordPolicy passwordPolicy);
 
     /**
-     * @return
+     * 获得当前系统中的默认密码策略
      */
     PasswordPolicy get();
 

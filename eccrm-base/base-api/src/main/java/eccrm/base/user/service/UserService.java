@@ -1,6 +1,7 @@
 package eccrm.base.user.service;
 
 import com.ycrl.core.pager.PageVo;
+import com.ycrl.utils.gson.ResponseData;
 import eccrm.base.user.bo.UserBo;
 import eccrm.base.user.domain.User;
 import eccrm.base.user.vo.UserVo;
@@ -35,7 +36,13 @@ public interface UserService extends VoWrapper<User, UserVo> {
 
     UserVo findById(String id);
 
-    void updatePassword(String id, String password);
+    /**
+     * 更改当前用户的密码
+     *
+     * @param oldPwd 原始密码
+     * @param newPwd 新密码
+     */
+    ResponseData updatePassword(String oldPwd, String newPwd);
 
     /**
      * 批量删除用户：
