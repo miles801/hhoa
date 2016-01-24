@@ -20,6 +20,12 @@
                 </div >
                 <div class="row" >
                     <label >
+                        <input type="radio" ng-model="checked" value="1"/>
+                        <span style="margin: 0 5px;">个人</span>
+                    </label>
+                </div>
+                <div class="row">
+                    <label>
                         <input type="radio" ng-model="checked" value="2" />
                         <span style="margin: 0 5px;" >所属岗位</span >
                     </label >
@@ -36,7 +42,7 @@
                         <span style="margin: 0 5px;" >所属机构及下级机构</span >
                     </label >
                 </div >
-                <div class="row" >
+                <div class="row dn">
                     <label >
                         <input type="radio" ng-model="checked" value="6" />
                         <span style="margin: 0 5px;" >所属系统</span >
@@ -89,7 +95,7 @@
                             </div >
                         </div >
                     </div >
-                    <div class="row" >
+                    <div class="row dn">
                         <label >
                             <input type="checkbox" ng-model="hasMoreParam" value="7" />
                             <span style="margin: 0 5px;" >指定系统</span >
