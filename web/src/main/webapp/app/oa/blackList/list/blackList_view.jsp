@@ -1,4 +1,3 @@
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
     String contextPath = request.getContextPath();
@@ -6,7 +5,7 @@
 <html lang="en">
 <head>
     <title>黑户查询</title>
-    <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE8"/>
+    <meta content="text/html" charset="utf-8">
     <link rel="stylesheet" type="text/css" href="<%=contextPath%>/vendor/bootstrap-v3.0/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="<%=contextPath%>/style/standard/css/eccrm-common-new.css">
     <script type="text/javascript" src="<%=contextPath%>/static/ycrl/javascript/jquery-all.js"></script>
@@ -164,24 +163,23 @@
     <div class="nomapping" ng-cloak ng-if="noresult">
         <span>很抱歉，没有找到与“<span class="error">{{errorContent}}</span>”相关的知识。</span>
     </div>
-    <div class="box" ng-cloak ng-repeat="foo in beans.data">
+    <div class="box" bindonce ng-cloak ng-repeat="foo in beans.data">
         <div class="item">
             <span class="head">客户名称：</span>
-            <span class="content">{{foo.name}}</span>
+            <span class="content" bo-text="foo.name"></span>
         </div>
         <div class="item">
             <span class="head">客户信息：</span>
-            <span class="content">{{foo.info}}</span>
+            <span class="content" bo-text="foo.info"></span>
         </div>
         <div class="item">
             <span class="head">原因：</span>
-            <span class="content">{{foo.reason}}</span>
+            <span class="content" bo-text="foo.reason"></span>
         </div>
     </div>
     <div id="pager" eccrm-page="pager" ng-cloak ng-show="beans.total>pager.limit"
          style="width: 800px; text-align: center; margin: 15px auto 15px;height: 40px;"></div>
 </div>
-
 </body>
 <script type="text/javascript" src="<%=contextPath%>/app/oa/blackList/blackList.js"></script>
 <script type="text/javascript" src="<%=contextPath%>/app/oa/blackList/list/blackList_view.js"></script>

@@ -7,25 +7,6 @@
         'eccrm.im.news'        // 新闻
     ]);
 
-    app.directive('eccrmImgLoading', function (CommonUtils) {
-        return {
-            link: function (scope, ele, attr) {
-                var src = attr['eccrmImgLoading'];
-                $.ajax({
-                    url: src,
-                    processData: false
-                }).always(function (b64data) {
-                    ele.height(100);
-                    if (typeof b64data == 'string') {
-                        ele.attr("src", b64data);
-                    } else if (typeof b64data == 'object' && b64data.status == 500) {
-                        ele.attr('src', CommonUtils.contextPathURL('/app/main/images/icon/l9.png'));
-                    }
-                });
-            }
-        }
-    });
-
     app.controller('MainController', function ($scope, $http, PasswordModal, $timeout, CommonUtils, AlertFactory, AsideFactory) {
         $scope.menus = []; // 菜单
 
@@ -190,7 +171,7 @@
                 }
             });
         };
-        getMessage();
+        //getMessage();
 
 
         // 当子菜单渲染完毕后

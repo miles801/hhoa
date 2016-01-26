@@ -27,8 +27,8 @@ Date: 2014-01-14 11:23:09
     <script type="text/javascript" src="<%=contextPath%>/vendor/My97DatePicker/WdatePicker.js" ></script >
 
     <%-- 富文本 --%>
-    <script type="text/javascript" src="<%=contextPath%>/vendor/kindeditor-4.1.10/kindeditor-min.js" charset="utf-8" ></script >
-    <script type="text/javascript" src="<%=contextPath%>/vendor/kindeditor-4.1.10/lang/zh_CN.js" charset="utf-8" ></script >
+    <script type="text/javascript" src="<%=contextPath%>/vendor/kindeditor-4.1.10/kindeditor-min.js"></script>
+    <script type="text/javascript" src="<%=contextPath%>/vendor/kindeditor-4.1.10/lang/zh_CN.js"></script>
 
     <script type="text/javascript" src="<%=contextPath%>/app/org/org.js" charset="utf-8" ></script >
     <script type="text/javascript" src="<%=contextPath%>/app/org/orgPosition.js" charset="utf-8" ></script >

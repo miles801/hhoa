@@ -7,10 +7,6 @@
 <html lang="en">
 <head>
     <title>海航OA协同办公系统</title>
-    <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE8"/>
-    <!--[if IE]>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <![endif]-->
     <link rel="stylesheet" href="<%=contextPath%>/vendor/bootstrap-v3.0/css/bootstrap.min.css"/>
     <link rel="stylesheet" href="<%=contextPath%>/style/standard/css/eccrm-common-new.css"/>
     <link rel="stylesheet" href="<%=contextPath%>/app/main/css/main.css"/>
@@ -44,9 +40,8 @@
             <div class="LB_container">
                 <a bindonce bo-title="menu.name" ng-repeat="menu in menus" ng-repeat-finish
                    bo-class="{'current':$index===0}" ng-click="showChildren(menu);">
-                    <img eccrm-img-loading="<%=contextPath%>/attachment/image?id={{menu.icon}}" ng-cloak
-                         bo-if="menu.icon" src="<%=contextPath%>/style/standard/images/loading.gif" width="48"
-                         height="50"/>
+                    <img ng-src="<%=contextPath%>/attachment/download?id={{menu.icon}}" ng-cloak
+                         bo-if="menu.icon"/>
                 </a>
             </div>
             <div class="btnT"></div>

@@ -53,7 +53,7 @@ public class LoginFilter implements Filter {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         HttpServletResponse response = (HttpServletResponse) servletResponse;
 
-        response.addHeader("X-UA-Compatible", "IE=8,9,10,edge");
+        response.addHeader("X-UA-Compatible", "chrome=1,IE=edge,IE=11,IE=10,IE=9,IE=8");
         // 是否为静态文件
         String requestUri = request.getRequestURI();
         for (String suffix : static_suffix) {
