@@ -140,8 +140,8 @@
                  * @returns {boolean}
                  */
                 loading: function (promise, title, successCallback, scope, failCallback) {
-                    var elm = $('<div style="position: absolute;top:0;left: 0;width: 100%;height: 100%;opacity: 0;">' +
-                        '<div style="position:fixed;height: 100%;width: 100%;background-color: #000;opacity: 0.8;z-index: 99998;"></div>' +
+                    var elm = $('<div style="position: fixed;top:0;left: 0;width: 100%;height: 100%;opacity: 0;z-index: 99998;">' +
+                        '<div style="position:absolute;height: 100%;width: 100%;background-color: #000;opacity: 0.8;"></div>' +
                         '<div style="background: url(' + this.contextPathURL('/style/standard/css/icons/loading2.gif') + ') no-repeat;position: absolute;top:45%;left: 45%;width: 60px;height: 60px;background-size: contain;z-index: 99999;"></div>' +
                         '</div>');
                     $('body').append(elm);
