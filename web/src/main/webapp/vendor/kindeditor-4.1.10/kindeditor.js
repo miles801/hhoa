@@ -593,13 +593,18 @@ function _ready(fn) {
 	_bind(window, 'load', readyFunc);
 }
 if (_IE) {
-	window.attachEvent('onunload', function() {
-		_each(_eventData, function(key, events) {
+	var unload = function () {
+		_each(_eventData, function (key, events) {
 			if (events.el) {
 				_unbind(events.el);
 			}
 		});
-	});
+	};
+	if(window.attachEvent) {
+		window.attachEvent('onunload', unload);
+	}else if(window.addEventListener){
+		window.addEventListener('unload',unload)
+	}
 }
 K.ctrl = _ctrl;
 K.ready = _ready;
