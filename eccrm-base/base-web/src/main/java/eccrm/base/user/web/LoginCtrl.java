@@ -106,6 +106,7 @@ public class LoginCtrl {
             redisClient.hset("login:", token, empId);
 
             // 保存用户信息
+            redisClient.del("user:" + empId);
             redisClient.hset("user:" + empId, empId, String.valueOf(new Date().getTime()));
 
             // 保存操作授权：PF,empId,资源编号的json
@@ -113,12 +114,14 @@ public class LoginCtrl {
             if (funcService == null) {
                 throw new RuntimeException("无法获得" + AccreditFuncService.class.getName() + "的实例对象，无法查询个人权限!");
             }
+            redisClient.del("PF:" + empId);
             List<String> resourceCodes = funcService.queryPersonalResourceCode();
             if (resourceCodes != null && !resourceCodes.isEmpty()) {
                 redisClient.sadd("PF:" + empId, resourceCodes.toArray(new String[resourceCodes.size()]));
             }
 
             // 保存数据授权：PD:empId,资源编号,授权明细
+            redisClient.del("PD:" + empId);
             AccreditDataService ads = systemContainer.getBean(AccreditDataService.class);
             if (ads != null) {
                 List<AccreditData> accreditData = ads.queryPersonalAllDataResource(empId);
