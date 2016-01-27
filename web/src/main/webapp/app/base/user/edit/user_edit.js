@@ -119,8 +119,12 @@
             $scope.update = function () {
                 verify(function () {
                     wrapDateToUser();
-                    var result = User.update($scope.user);
-                    AlertFactory.handle($scope, result, $scope.back)
+                    var promise = User.update($scope.user, function () {
+                        CommonUtils.addTab('update');
+                        AlertFactory.success(null, '更新成功!');
+                        CommonUtils.delay($scope.back, 3000);
+                    });
+                    CommonUtils.loading(promise)
                 });
             };
 

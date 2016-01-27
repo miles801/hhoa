@@ -67,23 +67,27 @@
                 AlertFactory.error($scope, '用户已注销，操作不可用!');
                 return false;
             }
-            var id = user.id;
-            ModalFactory.remove($scope, function () {
-                if (!id) {
-                    var items = [];
-                    angular.forEach($scope.items, function (v) {
-                        items.push(v.id);
-                    });
-                    if (!items || items.length < 1) {
-                        return;
+            var id = user && user.id;
+            ModalFactory.confirm({
+                scope: $scope,
+                content: '用户注销/删除后，将不可用，请确认!',
+                callback: function () {
+                    if (!id) {
+                        var items = [];
+                        angular.forEach($scope.items, function (v) {
+                            items.push(v.id);
+                        });
+                        if (!items || items.length < 1) {
+                            return;
+                        }
+                        id = items.join(',');
                     }
-                    id = items.join(',');
+                    var result = User.deleteByIds({ids: id});
+                    AlertFactory.handle($scope, result, function () {
+                        AlertFactory.success($scope, null, '删除/注销成功!');
+                        $scope.query();
+                    });
                 }
-                var result = User.deleteByIds({ids: id});
-                AlertFactory.handle($scope, result, function () {
-                    AlertFactory.success($scope, null, '删除成功!');
-                    $scope.query();
-                });
             });
         };
 
@@ -91,13 +95,14 @@
          * 更新
          */
         $scope.update = function (user) {
-            if (user.status === 'CANCELED') {
-                AlertFactory.error($scope, '用户已注销，操作不可用!');
-                return false;
-            }
+            /*if (user.status === 'CANCELED') {
+             AlertFactory.error($scope, '用户已注销，操作不可用!');
+             return false;
+             }*/
             CommonUtils.addTab({
                 title: '更新用户',
-                url: 'base/user/modify?id=' + user.id
+                url: 'base/user/modify?id=' + user.id,
+                onUpdate: $scope.query
             });
         };
 
