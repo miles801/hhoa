@@ -105,7 +105,7 @@
 <div class="main" ng-app="oa.workLog.comment" ng-controller="Ctrl"
      style="overflow: hidden;background-color: #ddd;">
     <div class="wrap">
-        <div class="box">
+        <div class="box" ng-cloak ng-if="hasCreateArticleRight">
         <textarea style="height: 60px;width: 100%;padding: 10px 1em;border: 0;outline: none;" placeholder="我也说点什么"
                   ng-model="content" ng-focus="focused=true" ng-blur="delayFocus();"></textarea>
             <div style="text-align: right;padding:5px;border-top:1px solid #dcdcdc;" ng-show="focused" ng-cloak>

@@ -13,13 +13,19 @@
         $scope.date = '';
 
         $scope.hasCommentRight = false;
+        $scope.hasCreateArticleRight = false;
 
         // 查询是否具有评论权限
         $http.get(CommonUtils.contextPathURL('/auth/accreditFunc/hasPermission?code=OPERATE_WORK_LOG_COMMENT'))
             .success(function (data) {
                 $scope.hasCommentRight = data.data;
             });
+        $http.get(CommonUtils.contextPathURL('/auth/accreditFunc/hasPermission?code=OPERATE_WORK_LOG_CREATE'))
+            .success(function (data) {
+                $scope.hasCreateArticleRight = data.data;
+            });
 
+        //
         //查询数据
         $scope.query = function () {
             $scope.pager.query();
@@ -82,7 +88,7 @@
             CommonUtils.delay(function () {
                 $scope.focused = false;
                 $scope.$apply();
-            }, 100);
+            }, 500);
         };
 
         // 新增日志
