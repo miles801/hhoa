@@ -105,7 +105,8 @@
             <a href="javascript:window.history.back();" class="btn btn-blue" style="float: left;">&lt;&lt;</a>
             <span style="clear: left;"></span>
             <span ng-bind-template="{{moduleName}}" id="title"></span>
-            <a type="button" class="btn btn-blue" ng-click="add();" style="float: right;">
+            <a type="button" class="btn btn-blue" ng-click="add();" style="float: right;" ng-cloak
+               eccrm-previlege="OP_ARTICLE_ADD">
                 发帖
             </a>
             <span style="clear: right;"></span>
