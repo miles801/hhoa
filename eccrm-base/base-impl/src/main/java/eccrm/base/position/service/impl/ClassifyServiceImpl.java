@@ -7,11 +7,13 @@ import com.ycrl.core.pager.PageVo;
 import com.ycrl.utils.tree.PathTreeBuilder;
 import eccrm.base.position.bo.ClassifyBo;
 import eccrm.base.position.dao.ClassifyDao;
+import eccrm.base.position.dao.PositionDao;
 import eccrm.base.position.domain.Classify;
 import eccrm.base.position.service.ClassifyService;
 import eccrm.base.position.vo.ClassifyVo;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.util.Assert;
 
 import javax.annotation.Resource;
 import java.util.HashSet;
@@ -26,6 +28,8 @@ import java.util.Set;
 public class ClassifyServiceImpl implements ClassifyService {
     @Resource
     private ClassifyDao classifyDao;
+    @Resource
+    private PositionDao positionDao;
 
     @Override
     public String save(Classify classify) {
@@ -99,6 +103,9 @@ public class ClassifyServiceImpl implements ClassifyService {
     public void deleteByIds(String... ids) {
         if (ids == null || ids.length == 0) return;
         for (String id : ids) {
+            // 判断该岗位分类下是否已经有岗位了
+            boolean hasPosition = positionDao.hasPosition(id);
+            Assert.isTrue(!hasPosition, "岗位分类(" + id + ")下已经配置了岗位，不可以删除!");
             classifyDao.deleteById(id);
         }
     }

@@ -48,7 +48,7 @@
         })
     });
     app.service('ClassifyService', function ($resource, CommonUtils) {
-        return $resource(CommonUtils.contextPathURL('/position/classify/:method/:id'), {}, {
+        return $resource(CommonUtils.contextPathURL('/position/classify/:method'), {}, {
             //保存
             save: {method: 'POST', params: {method: 'save'}, isArray: false},
             //更新

@@ -20,6 +20,7 @@
     <script type="text/javascript" src="<%=contextPath%>/static/ycrl/javascript/angular-strap-all.js" ></script >
 
     <script type="text/javascript" src="<%=contextPath%>/static/ycrl/javascript/angular-ztree-all.js" ></script >
+    <script type="text/javascript" src="<%=contextPath%>/vendor/zTree/js/jquery.ztree.exedit-3.5.min.js"></script>
     <script type="text/javascript" src="<%=contextPath%>/app/position/position.js" ></script >
     <script type="text/javascript" src="<%=contextPath%>/app/org/org.js" ></script >
     <script type="text/javascript" src="<%=contextPath%>/app/position/position-modal.js" ></script >

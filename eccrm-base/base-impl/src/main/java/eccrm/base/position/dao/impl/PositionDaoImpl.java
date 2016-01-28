@@ -166,6 +166,14 @@ public class PositionDaoImpl extends HibernateDaoHelper implements PositionDao {
     }
 
     @Override
+    public boolean hasPosition(String positionCategoryId) {
+        Assert.hasText(positionCategoryId, "查询指定岗位分类下是否具有岗位时：岗位分类ID不能为空!");
+        return (Long) createRowCountsCriteria(Position.class)
+                .add(Restrictions.eq("positionType", positionCategoryId))
+                .uniqueResult() > 0;
+    }
+
+    @Override
     @SuppressWarnings("unchecked")
     public List<Position> findByPositionName(String positionName) {
         eccrm.utils.Argument.isEmpty(positionName, "查询指定岗位名称，岗位名称不能为空!");

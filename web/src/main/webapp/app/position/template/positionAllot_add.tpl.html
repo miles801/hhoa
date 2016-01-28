@@ -56,8 +56,11 @@
 
             </div>
             <div class="modal-footer" ng-cloak>
-                <button type="button" class="btn btn-default btn-primary" ng-click="save();"
-                        ng-disabled="form.$invalid">确认
+                <button type="button" class="btn btn-default btn-primary" ng-click="save();" ng-disabled="form.$invalid"
+                        ng-cloak ng-show="pageType=='add'">保存
+                </button>
+                <button type="button" class="btn btn-default btn-primary" ng-click="update();"
+                        ng-disabled="form.$invalid" ng-cloak ng-show="pageType=='modify'">更新
                 </button>
                 <button type="button" class="btn btn-default" ng-click="close()">关闭</button>
             </div>

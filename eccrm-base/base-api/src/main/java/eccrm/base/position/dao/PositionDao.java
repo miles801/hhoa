@@ -74,4 +74,11 @@ public interface PositionDao {
      */
     Position queryByCode(String code);
 
+    /**
+     * 判断指定分类下是否具有岗位
+     *
+     * @param positionCategoryId 岗位分类ID
+     * @return true：有岗位、false没有岗位
+     */
+    boolean hasPosition(String positionCategoryId);
 }

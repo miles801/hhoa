@@ -2,6 +2,7 @@ package eccrm.base.position.web;
 
 
 import com.ycrl.core.pager.PageVo;
+import com.ycrl.core.web.BaseController;
 import com.ycrl.utils.gson.GsonUtils;
 import eccrm.base.position.bo.ClassifyBo;
 import eccrm.base.position.domain.Classify;
@@ -24,7 +25,7 @@ import java.util.List;
 
 @Controller
 @RequestMapping(value = {"/position/classify"})
-public class ClassifyCtrl {
+public class ClassifyCtrl extends BaseController {
     @Resource
     private ClassifyService classifyService;
 
@@ -80,7 +81,7 @@ public class ClassifyCtrl {
         return null;
     }
 
-    @RequestMapping(value = "/update", method = RequestMethod.PUT)
+    @RequestMapping(value = "/update", method = RequestMethod.POST)
     @ResponseBody
     public void update(HttpServletRequest request, HttpServletResponse response) {
         Classify classify = GsonUtils.wrapDataToEntity(request, Classify.class);

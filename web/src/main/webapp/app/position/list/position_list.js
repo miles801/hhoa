@@ -6,18 +6,16 @@
         'eccrm.base.position.modal',
         'eccrm.angular',
         'eccrm.angularstrap']);
-    app.controller('PositionListController', function ($scope, ClassifyService, CommonUtils, AlertFactory, CompileTree, Debounce, PositionModal, $window, PositionService) {
+    app.controller('PositionListController', function ($scope, ClassifyService, CommonUtils, AlertFactory, ModalFactory, PositionModal, PositionService) {
 
         // 添加岗位分类
         $scope.addAllot = function () {
-            PositionModal.addAllot({scope: $scope}, function (data) {
-            });
+            PositionModal.addAllot({scope: $scope}, initTree);
         };
 
         // 添加岗位
         $scope.addRole = function () {
-            PositionModal.addRole({scope: $scope}, function (data) {
-            });
+            PositionModal.addRole({scope: $scope}, $scope.query);
         };
 
 
@@ -45,15 +43,44 @@
 
         //初始化ztree树（必须在文档加载后执行）
         var setting = {
-            view: {showIcon: false},
+            view: {
+                selectedMulti: false
+            },
             data: {
                 simpleData: {enable: true}
+            },
+            edit: {
+                enable: true,
+                removeTitle: '删除',
+                showRemoveBtn: true,
+                showRenameBtn: true,
+                renameTitle: '更改'
             },
             callback: {
                 onClick: function (event, treeId, treeNode) {
                     //防止重复点击
                     if ($scope.current && $scope.current.id == treeNode.id) return;
                     $scope.query(treeNode.id);
+                },
+                beforeRemove: function (treeId, treeNode) {
+                    ModalFactory.confirm({
+                        scope: $scope,
+                        content: '删除岗位分类“' + treeNode.name + '”后将无法恢复，请确认!',
+                        callback: function () {
+                            var promise = ClassifyService.deleteByIds({ids: treeNode.id}, function (data) {
+                                if (data.success) {
+                                    AlertFactory.success(null, '删除成功!');
+                                    initTree();
+                                }
+                            });
+                            CommonUtils.loading(promise);
+                        }
+                    });
+                    return false;
+                },
+                beforeEditName: function (treeId, treeNode) {
+                    PositionModal.addAllot({scope: $scope, id: treeNode.id, pageType: 'modify'}, initTree);
+                    return false;
                 }
             }
         };
@@ -68,7 +95,6 @@
                 }
                 //初始化菜单
                 $.fn.zTree.init($("#treeDemo"), setting, [
-
                     {name: '岗位类别', children: data || [], open: true}
                 ]);
 

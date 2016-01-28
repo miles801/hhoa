@@ -9,15 +9,16 @@
     app.factory('PositionModal', function ($modal, OrgTree, positionConstant, CommonUtils, PositionService, ClassifyService, CompileTree, AlertFactory, ModalFactory, $filter) {
         return {
             //分类==》新增
-            addAllot: function (cfg, callback) {
+            addAllot: function (options, callback) {
                 var defaults = {
                     scope: null,
+                    pageType: 'add',
                     callback: null,//点击确定后要执行的函数
                     afterShown: null//模态对话框显示完成后要执行的函数
                 };
 
-                cfg = angular.extend({}, defaults, cfg);
-                var scope = cfg.scope;
+                options = angular.extend({}, defaults, options);
+                var scope = options.scope;
                 if (!scope) throw '使用模态对话框时必须指定scope!';
                 var modal = $modal({
                     backdrop: 'static',
@@ -28,10 +29,10 @@
                     status: '1'
                 };
                 var that = this;
-                callback = callback || cfg.callback;
+                callback = callback || options.callback;
                 var $scope = modal.$scope;
 
-                $scope.close = function (createNew) {
+                $scope.close = function () {
                     $scope.$hide();
                 };
                 $scope.beans = {parent: null};
@@ -41,26 +42,59 @@
                         $scope.beans.parent = {id: node.id, name: node.name};
                     }
                 };
+
                 $scope.save = function (createNew) {
-                    ClassifyService.save($scope.beans, function (data) {
+                    var promise = ClassifyService.save($scope.beans, function (data) {
                         if (data && data.success) {
                             if (createNew) {
-                                AlertFactory.success('保存成功!', -1);
+                                AlertFactory.success(null, '保存成功!');
                                 $scope.beans = angular.extend({}, foo);
                                 return;
                             }
-                            if (angular.isFunction(callback || cfg.callback)) {
-                                callback.call(that, arguments);
+                            if (angular.isFunction(callback || options.callback)) {
+                                callback();
                             }
                             $scope.$hide();
-                            window.location.reload();
                         } else {
                             AlertFactory.error('保存失败!', -1);
                         }
                     });
+                    CommonUtils.loading(promise);
                 };
 
-                callback = callback || cfg.callback;
+                $scope.update = function () {
+                    var promise = ClassifyService.update($scope.beans, function (data) {
+                        if (data && data.success) {
+                            AlertFactory.success(null, '更新成功!');
+                            if (angular.isFunction(callback || options.callback)) {
+                                callback();
+                            }
+                            $scope.$hide();
+                        } else {
+                            AlertFactory.error(null, '更新失败!' + data.data);
+                        }
+                    });
+                    CommonUtils.loading(promise);
+                };
+
+                var load = function (id) {
+                    var promise = ClassifyService.get({id: id}, function (data) {
+                        $scope.beans = data.data;
+                    });
+                    CommonUtils.loading(promise);
+                };
+
+                $scope.pageType = options.pageType || 'add';
+                if ($scope.pageType == 'modify') {
+                    if (!options.id) {
+                        AlertFactory.error(null, '页面初始化错误，未获得ID!');
+                        CommonUtils.delay($scope.close, 3000);
+                        return;
+                    }
+
+                    load(options.id)
+                }
+
 
             },
             //权限==》新增

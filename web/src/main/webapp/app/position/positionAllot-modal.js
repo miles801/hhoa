@@ -7,10 +7,10 @@
 
 
 (function (angular, window) {
-    var app = angular.module('com.wanda.positionAllot.modal', [ 'eccrm.angular','eccrm.angularstrap',
-        'eccrm.position.positionAllot','eccrm.position.position',
-        'eccrm.ztree.modal','eccrm.directive.ztree']);
-    app.factory('PositionAllotModal', function ($modal,CompileTree,PositionService, positionAllotConstant,PositionAllotService, CommonUtils, ZtreeModal, AlertFactory, ModalFactory, $filter) {
+    var app = angular.module('com.wanda.positionAllot.modal', ['eccrm.angular', 'eccrm.angularstrap',
+        'eccrm.position.positionAllot', 'eccrm.position.position',
+        'eccrm.ztree.modal', 'eccrm.directive.ztree']);
+    app.factory('PositionAllotModal', function ($modal, CompileTree, PositionService, positionAllotConstant, PositionAllotService, CommonUtils, ZtreeModal, AlertFactory, ModalFactory, $filter) {
             return {
                 // 弹出层多选
                 // 参数options(必须）：配置项
@@ -36,7 +36,6 @@
                     };
                     ZtreeModal.doubleTree(options, callback);
                 },
-                //知识库==》调查问卷==》新增
                 add: function (cfg, callback) {
                     var defaults = {
                         scope: null,
@@ -47,7 +46,11 @@
                     cfg = angular.extend({}, defaults, cfg);
                     var scope = cfg.scope;
                     if (!scope) throw '使用模态对话框时必须指定scope!';
-                    var modal = $modal({backdrop: 'static', scope: scope, template: CommonUtils.contextPathURL('app/position/template/positionAllot_Allot.tpl.html')});
+                    var modal = $modal({
+                        backdrop: 'static',
+                        scope: scope,
+                        template: CommonUtils.contextPathURL('app/position/template/positionAllot_Allot.tpl.html')
+                    });
                     var foo = {
                         status: '1'
                     };
@@ -66,91 +69,91 @@
                     positionAllotConstant.orgType(function (data) {
                         scope.orgTypes = data;
                     });
-                    scope.beans={};
+                    scope.beans = {};
                     scope.ClassifyztreeOptions = {
                         data: CompileTree.init,
                         click: function (node) {
                             scope.beans.classify = {id: node.id, name: node.name};
-                            PositionService.queryAll({id: node.id},function (dataParam) {
+                            PositionService.queryAll({id: node.id}, function (dataParam) {
                                 dataParam = dataParam.data || {total: 0};
-                                scope.positionAllotd=dataParam.data
+                                scope.positionAllotd = dataParam.data
                             });
                         }
-                    }
+                    };
 
-                     modal.$scope.positionAllots = [];
-                     modal.$scope.selectOne = function () {
-                         if (!modal.$scope.itemd || !modal.$scope.itemd.length)return;
-                             for (var j = 0; j < modal.$scope.itemd.length; j++) {
-                                 var itemdId = modal.$scope.itemd[j].id
-                                 for (var i = 0; i < modal.$scope.positionAllotd.length; i++) {
-                                        var ids = modal.$scope.positionAllotd[i].id;
-                                         if (ids == itemdId) {
-                                             modal.$scope.positionAllots.push(modal.$scope.positionAllotd[i])
-                                             modal.$scope.positionAllotd.splice(i, 1);
-                                         }
-                                 }
-                             }
-                         modal.$scope.itemd = [];
-                         modal.$scope.items = [];
-                     }
-                     modal.$scope.deleteOne = function () {
-                         if (!modal.$scope.items || !modal.$scope.items.length)return;
-                             for (var j = 0; j < modal.$scope.items.length; j++) {
-                                    var itemsId = modal.$scope.items[j].id
-                                 for (var i = 0; i < modal.$scope.positionAllots.length; i++) {
-                                    var ids = modal.$scope.positionAllots[i].id;
-                                     if (ids == itemsId) {
-                                         modal.$scope.positionAllotd.push(modal.$scope.positionAllots[i])
-                                         modal.$scope.positionAllots.splice(i, 1);
-                                        }
+                    modal.$scope.positionAllots = [];
+                    modal.$scope.selectOne = function () {
+                        if (!modal.$scope.itemd || !modal.$scope.itemd.length)return;
+                        for (var j = 0; j < modal.$scope.itemd.length; j++) {
+                            var itemdId = modal.$scope.itemd[j].id
+                            for (var i = 0; i < modal.$scope.positionAllotd.length; i++) {
+                                var ids = modal.$scope.positionAllotd[i].id;
+                                if (ids == itemdId) {
+                                    modal.$scope.positionAllots.push(modal.$scope.positionAllotd[i])
+                                    modal.$scope.positionAllotd.splice(i, 1);
                                 }
-                             }
-                         modal.$scope.itemd = [];
-                         modal.$scope.items = [];
-                     }
-                     modal.$scope.selectAll = function () {
-                         if (modal.$scope.positionAllots != null) {
-                             for (var i = 0; i < modal.$scope.positionAllotd.length; i++) {
-                             modal.$scope.positionAllots.push(modal.$scope.positionAllotd[i])
-                             }
-                         } else {
+                            }
+                        }
+                        modal.$scope.itemd = [];
+                        modal.$scope.items = [];
+                    }
+                    modal.$scope.deleteOne = function () {
+                        if (!modal.$scope.items || !modal.$scope.items.length)return;
+                        for (var j = 0; j < modal.$scope.items.length; j++) {
+                            var itemsId = modal.$scope.items[j].id
+                            for (var i = 0; i < modal.$scope.positionAllots.length; i++) {
+                                var ids = modal.$scope.positionAllots[i].id;
+                                if (ids == itemsId) {
+                                    modal.$scope.positionAllotd.push(modal.$scope.positionAllots[i])
+                                    modal.$scope.positionAllots.splice(i, 1);
+                                }
+                            }
+                        }
+                        modal.$scope.itemd = [];
+                        modal.$scope.items = [];
+                    }
+                    modal.$scope.selectAll = function () {
+                        if (modal.$scope.positionAllots != null) {
+                            for (var i = 0; i < modal.$scope.positionAllotd.length; i++) {
+                                modal.$scope.positionAllots.push(modal.$scope.positionAllotd[i])
+                            }
+                        } else {
                             modal.$scope.positionAllots = tmp.data;
-                         }
-                         modal.$scope.positionAllotd = [];
-                         modal.$scope.itemd = [];
-                         modal.$scope.items = [];
-                     }
-                     modal.$scope.deleteAll = function () {
+                        }
+                        modal.$scope.positionAllotd = [];
+                        modal.$scope.itemd = [];
+                        modal.$scope.items = [];
+                    }
+                    modal.$scope.deleteAll = function () {
                         if (modal.$scope.positionAllotd != null) {
-                             for (var i = 0; i < modal.$scope.positionAllots.length; i++) {
+                            for (var i = 0; i < modal.$scope.positionAllots.length; i++) {
                                 modal.$scope.positionAllotd.push(modal.$scope.positionAllots[i])
-                             }
-                         } else {
+                            }
+                        } else {
                             modal.$scope.positionAllotd = tmp.data;
-                         }
-                         modal.$scope.positionAllots = [];
-                         modal.$scope.itemd = [];
-                         modal.$scope.items = [];
-                     }
+                        }
+                        modal.$scope.positionAllots = [];
+                        modal.$scope.itemd = [];
+                        modal.$scope.items = [];
+                    }
                     scope.save = function (createNew) {
-                        scope.beans.positions= modal.$scope.positionAllots;
-                        if(modal.$scope.positionAllots == null ){
-                           return art.dialog({
+                        scope.beans.positions = modal.$scope.positionAllots;
+                        if (modal.$scope.positionAllots == null) {
+                            return art.dialog({
                                 content: '没有选择岗位！',
                                 cancelVal: '关闭',
                                 cancel: true
                             });
 
                         }
-                        if(scope.beans.busiType == null){
+                        if (scope.beans.busiType == null) {
                             return art.dialog({
                                 content: '没有系统类型！',
                                 cancelVal: '关闭',
                                 cancel: true
                             });
                         }
-                        if( scope.beans.orgType == null){
+                        if (scope.beans.orgType == null) {
                             return art.dialog({
                                 content: '没有选择机构类型！',
                                 cancelVal: '关闭',
@@ -160,7 +163,7 @@
                         PositionAllotService.save(scope.beans, function (data) {
                             if (data && data.success) {
                                 if (createNew) {
-                                    AlertFactory.success('保存成功!',-1);
+                                    AlertFactory.success('保存成功!', -1);
                                     scope.beans = angular.extend({}, foo);
                                     return;
                                 }
@@ -170,7 +173,7 @@
                                 scope.$hide();
                                 window.location.reload();
                             } else {
-                                AlertFactory.error('保存失败!',-1);
+                                AlertFactory.error('保存失败!', -1);
                             }
                         });
 
