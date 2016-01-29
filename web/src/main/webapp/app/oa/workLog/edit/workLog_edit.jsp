@@ -59,16 +59,18 @@
             <h3>工作日志</h3>
             <div class="wrap">
                 <div class="row">
-                    <div class="form-label col-3">
+                    <div class="form-label col-3" style="text-align: left;font-size: 14px;">
                         <label>日志内容：</label>
                     </div>
-                    <textarea class="col-7-half" rows="10" name="content"
+                </div>
+                <div class="row">
+                    <textarea class="col-12" rows="10" name="content"
                               ng-model="beans.content" validate validate-required validate-max-length="2000"></textarea>
                 </div>
-                <div class="button-row">
-                    <button type="button" class="btn btn-green btn-min" ng-click="save()"
-                            ng-disabled="!form.$valid">
-                        <span class="glyphicons disk_save"></span> 保存
+                <div class="button-row" style="text-align: right;padding: 10px 0;">
+                    <button type="button" class="btn btn-green btn-min" ng-click="save()" ng-disabled="form.$invalid"
+                            ng-if="!saved">
+                        <span class="glyphicons disk_save"></span> 发表
                     </button>
                 </div>
             </div>

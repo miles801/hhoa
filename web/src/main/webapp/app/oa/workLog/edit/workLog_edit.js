@@ -14,11 +14,12 @@
         var id = $('#id').val();
 
         // 保存
-        $scope.save = function (createNew) {
+        $scope.save = function () {
             var promise = WorkLogService.save($scope.beans, function (data) {
                 if (data && data['success'] == true) { //保存成功
                     AlertFactory.success(null, '保存成功!');
-                    $scope.form.$setValidity('committed', false);
+                    $scope.saved = true;
+                    $('textarea').attr('disabled', 'disabled');
                 } else {
                     AlertFactory.saveError($scope, data);
                 }
