@@ -56,11 +56,11 @@
                 <input type="hidden" id="pageType" value="${pageType}"/>
                 <input type="hidden" id="id" value="${id}"/>
             </div>
-            <h3>工作日志</h3>
+            <h3>工作反映</h3>
             <div class="wrap">
                 <div class="row">
                     <div class="form-label col-3" style="text-align: left;font-size: 14px;">
-                        <label>日志内容：</label>
+                        <label>反映内容：</label>
                     </div>
                 </div>
                 <div class="row">
@@ -70,7 +70,7 @@
                 <div class="button-row" style="text-align: right;padding: 10px 0;">
                     <button type="button" class="btn btn-green btn-min" ng-click="save()" ng-disabled="form.$invalid"
                             ng-if="!saved">
-                        <span class="glyphicons disk_save"></span> 发表
+                        <span class="glyphicons disk_save"></span> 发送
                     </button>
                 </div>
             </div>
