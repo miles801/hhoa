@@ -377,12 +377,12 @@ SWFOption.prototype = {
                                         // 获得附件信息
                                         scope.$apply(function () {
                                             scope.attachments.push(obj[0]);
+                                            // 第三方回调
+                                            if (angular.isFunction(options.onSuccess)) {
+                                                options.onSuccess(obj[0]);
+                                            }
                                         });
 
-                                        // 第三方回调
-                                        if (angular.isFunction(options.onSuccess)) {
-                                            options.onSuccess(obj[0]);
-                                        }
                                     },
                                     onInit: function (instance) {
                                     }

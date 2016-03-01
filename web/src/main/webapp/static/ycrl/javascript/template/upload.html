@@ -3,7 +3,7 @@
 </div >
 <div ng-class="{'col-10-half':options.showLabel,'col-12':!options.showLabel}" ng-cloak>
     <div class="row" ng-show="options.maxFile > (attachments.length || 0) " ng-if="!options.readonly" >
-        <input type="file" class="col-4" >
+        <input type="file" class="col-4" ng-cloak/>
     </div >
     <div class="row" ng-if="options.showTable" >
         <table class="tableGrid" >
