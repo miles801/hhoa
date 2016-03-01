@@ -42,12 +42,44 @@ public class KnowledgeCtrl extends BaseController {
 
     /**
      * 跳转到添加知识页面
-     *
      */
     @RequestMapping(value = "/add", method = RequestMethod.GET)
     public String toAdd(HttpServletRequest request) {
         request.setAttribute(JspAccessType.PAGE_TYPE, JspAccessType.ADD);
         return "oa/knowledge/edit/knowledge_edit";
+    }
+
+
+    @RequestMapping(value = "/technology", method = RequestMethod.GET)
+    public String toTechnology(HttpServletRequest request) {
+        request.setAttribute(JspAccessType.PAGE_TYPE, JspAccessType.LIST);
+        return "oa/knowledge/list/knowledge_list_tech";
+    }
+
+    @RequestMapping(value = "/technology/add", method = RequestMethod.GET)
+    public String addTechnology(HttpServletRequest request) {
+        request.setAttribute(JspAccessType.PAGE_TYPE, JspAccessType.ADD);
+        return "oa/knowledge/edit/knowledge_edit_tech";
+    }
+
+    @RequestMapping(value = "/technology/modify", params = {"id"}, method = RequestMethod.GET)
+    public String toModifyTechnology(@RequestParam String id, HttpServletRequest request) {
+        request.setAttribute(JspAccessType.PAGE_TYPE, JspAccessType.MODIFY);
+        request.setAttribute("id", id);
+        return "oa/knowledge/edit/knowledge_edit_tech";
+    }
+
+    @RequestMapping(value = "/technology/search", method = RequestMethod.GET)
+    public String toTechnologySearch(HttpServletRequest request) {
+        request.setAttribute(JspAccessType.PAGE_TYPE, JspAccessType.LIST);
+        return "oa/knowledge/list/knowledge_tech_search";
+    }
+
+    @RequestMapping(value = {"/technology/detail"}, params = {"id"}, method = RequestMethod.GET)
+    public String toDetailTechnology(@RequestParam String id, HttpServletRequest request) {
+        request.setAttribute(JspAccessType.PAGE_TYPE, JspAccessType.DETAIL);
+        request.setAttribute("id", id);
+        return "oa/knowledge/edit/knowledge_edit_tech";
     }
 
     @RequestMapping(value = "/save", method = RequestMethod.POST)
@@ -65,6 +97,7 @@ public class KnowledgeCtrl extends BaseController {
         return "oa/knowledge/edit/knowledge_edit";
     }
 
+
     @RequestMapping(value = "/update", method = RequestMethod.POST)
     @ResponseBody
     public void update(HttpServletRequest request, HttpServletResponse response) {
@@ -79,6 +112,7 @@ public class KnowledgeCtrl extends BaseController {
         request.setAttribute("id", id);
         return "oa/knowledge/edit/knowledge_edit";
     }
+
 
     @ResponseBody
     @RequestMapping(value = "/get", params = {"id"}, method = RequestMethod.GET)

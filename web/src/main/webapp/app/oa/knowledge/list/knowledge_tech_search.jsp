@@ -15,6 +15,7 @@
     <script type="text/javascript" src="<%=contextPath%>/static/ycrl/javascript/jquery-all.js"></script>
     <script type="text/javascript" src="<%=contextPath%>/static/ycrl/javascript/angular-all.js"></script>
     <script type="text/javascript" src="<%=contextPath%>/static/ycrl/javascript/angular-strap-all.js"></script>
+    <script type="text/javascript" src="<%=contextPath%>/app/base/attachment/attachment.js"></script>
     <style type="text/css">
         .kn-search {
             margin-top: 15px;
@@ -134,7 +135,7 @@
     </script>
 </head>
 <body>
-<div class="main" ng-app="oa.knowledge.search" ng-controller="Ctrl" style="overflow: auto">
+<div class="main" ng-app="oa.knowledge.searchTech" ng-controller="Ctrl" style="overflow: auto">
     <div class="dn">
         <input type="hidden" id="type" value="${type}">
     </div>
@@ -142,28 +143,40 @@
         <div class="ta-c kn-search">
             <div class="search-logo">
                 <span style="padding-left: 100px;">
-                    <img src="<%=contextPath%>/app/main/images/logo3.png" width="50" height="50"/> 百问百答
+                    <img src="<%=contextPath%>/app/main/images/logo3.png" width="50" height="50"/> 技术学堂
                 </span>
             </div>
+            <%--
             <span class="searchbox">
                 <input type="text" id="keywordsOrTitle" ng-model="condition.keywordsOrTitle" size="20">
                 <span ng-click="condition.keywordsOrTitle=null"></span>
             </span>
             <button class="btn btn-search" ng-click="query();">搜索</button>
+            --%>
         </div>
         <div class="dn" eccrm-page="pager"></div>
     </div>
     <div class="nomapping" ng-cloak ng-if="noresult">
         <span>很抱歉，没有找到与“<span class="error">{{errorContent}}</span>”相关的知识。</span>
     </div>
-    <div class="box" ng-cloak ng-repeat="bean in beans.data">
-        <a ng-click="view(bean.id)" class="title" ng-bind="bean.title"></a>
-
-        <div class="content" ng-bind-html="html(bean.content)"></div>
+    <div style="margin:15px auto;width:750px;text-align:center;" ng-cloak ng-if="!noresult">
+        <div class="row" style="border: 1px solid #dcdcdc;">
+            <div bindonce ng-repeat="at in attachments"
+                 style="float:left;height: 50px;margin:10px 25px;cursor: pointer;">
+                <img ng-src="<%=contextPath%>/style/standard/images/icons/{{at.fileRealType}}.png"
+                     alt="{{at.fileName}}"/>
+                <a ng-href="<%=contextPath%>/attachment/download?id={{at.id}}" bo-text="at.fileName"
+                   target="_blank"></a>
+            </div>
+            &nbsp;
+        </div>
+        <div class="text-right" ng-cloak style="padding: 0 15px;height: 30px;line-height: 29px;font-size: 14px;">
+            <span>共 {{attachments.length||0}} 个文件</span>
+        </div>
     </div>
 </div>
 
 </body>
 <script type="text/javascript" src="<%=contextPath%>/app/oa/knowledge/knowledge.js"></script>
-<script type="text/javascript" src="<%=contextPath%>/app/oa/knowledge/list/knowledge_search.js"></script>
+<script type="text/javascript" src="<%=contextPath%>/app/oa/knowledge/list/knowledge_tech_search.js"></script>
 </html>

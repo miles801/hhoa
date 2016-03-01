@@ -7,18 +7,18 @@
         'eccrm.angularstrap',
         'oa.knowledge'
     ]);
-    app.controller('Ctrl', function ($scope, CommonUtils, ModalFactory, AlertFactory, KnowledgeService,KnowledgeParam) {
+    app.controller('Ctrl', function ($scope, CommonUtils, ModalFactory, AlertFactory, KnowledgeService, KnowledgeParam) {
         var defaults = {
-            type: 'business'
+            type: 'technology'
         };
 
         // 知识类型
-        KnowledgeParam.type(function(data){
+        KnowledgeParam.type(function (data) {
             $scope.types = data || [];
             $scope.types.unshift({name: '全部'});
         });
         // 状态
-        KnowledgeParam.status(function(data){
+        KnowledgeParam.status(function (data) {
             $scope.status = data || [];
             $scope.status.unshift({name: '全部'});
         });
@@ -101,7 +101,7 @@
         $scope.add = function () {
             CommonUtils.addTab({
                 title: '新增知识',
-                url: '/oa/knowledge/add',
+                url: '/oa/knowledge/technology/add',
                 onUpdate: $scope.query
             });
         };
@@ -110,7 +110,7 @@
         $scope.modify = function (id) {
             CommonUtils.addTab({
                 title: '更新知识',
-                url: '/oa/knowledge/modify?id=' + id,
+                url: '/oa/knowledge/technology/modify?id=' + id,
                 onUpdate: $scope.query
             });
         };
@@ -118,7 +118,7 @@
         $scope.view = function (id) {
             CommonUtils.addTab({
                 title: '查看知识',
-                url: '/oa/knowledge/detail?id=' + id
+                url: '/oa/knowledge/technology/detail?id=' + id
             });
         };
     });

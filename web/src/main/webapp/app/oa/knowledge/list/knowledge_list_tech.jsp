@@ -20,7 +20,7 @@
     </script>
 </head>
 <body>
-<div class="main condition-row-2" ng-app="oa.knowledge.list" ng-controller="Ctrl">
+<div class="main condition-row-1" ng-app="oa.knowledge.list" ng-controller="Ctrl">
     <div class="dn">
         <input type="hidden" id="type" value="${type}">
     </div>
@@ -53,13 +53,6 @@
                             <label>关键字:</label>
                         </div>
                         <input class="col-2-half" type="text" ng-model="condition.keywords"/>
-
-                        <div class="form-label col-1-half">
-                            <label>内容:</label>
-                        </div>
-                        <input class="col-2-half" type="text" ng-model="condition.content"/>
-                    </div>
-                    <div class="row">
 
                         <div class="form-label col-1-half">
                             <label>状态:</label>
@@ -109,27 +102,23 @@
                                          anyone-selected="anyone"></div>
                                 </td>
                                 <td>标题</td>
-                                <td style="width: 120px;">知识类型</td>
-                                <td>关键字</td>
-                                <td>内容</td>
-                                <td style="width: 120px;">状态</td>
-                                <td style="width: 100px;">操作</td>
+                                <td>文件</td>
+                                <td style="width: 80px;">状态</td>
+                                <td style="width: 80px;">操作</td>
                             </tr>
                             </thead>
                             <tbody class="table-body">
                             <tr ng-show="!beans || !beans.total">
-                                <td colspan="7" class="text-center">没有查询到数据！</td>
+                                <td colspan="5" class="text-center">没有查询到数据！</td>
                             </tr>
                             <tr bindonce ng-repeat="foo in beans.data" ng-cloak>
                                 <td><input type="checkbox" ng-model="foo.isSelected"/></td>
                                 <td>
                                     <a class="cp" ng-click="view(foo.id);" bo-text="foo.title"></a>
                                 </td>
-                                <td bo-text="foo.typeName"></td>
-                                <td bo-text="foo.keywords|substr:20"></td>
-                                <td bo-text="foo.content|substr:50"></td>
-                                <td bo-text="foo.statusName"></td>
-                                <td>
+                                <td bo-text="foo.keywords"></td>
+                                <td bo-text="foo.statusName" class="text-center"></td>
+                                <td class="text-center">
                                     <a class="cp" title="编辑" ng-click="modify(foo.id);">
                                         <i class="icons edit"></i>
                                     </a>
@@ -150,5 +139,5 @@
 
 </body>
 <script type="text/javascript" src="<%=contextPath%>/app/oa/knowledge/knowledge.js"></script>
-<script type="text/javascript" src="<%=contextPath%>/app/oa/knowledge/list/knowledge_list.js"></script>
+<script type="text/javascript" src="<%=contextPath%>/app/oa/knowledge/list/knowledge_list_tech.js"></script>
 </html>

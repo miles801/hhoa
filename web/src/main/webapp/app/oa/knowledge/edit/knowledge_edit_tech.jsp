@@ -7,26 +7,23 @@
 <html lang="en">
 
 <head>
-    <title>编辑知识</title>
+    <title>技术学堂</title>
     <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE8"/>
     <!--[if IE]>
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
     <![endif]-->
     <link rel="stylesheet" type="text/css" href="<%=contextPath%>/vendor/bootstrap-v3.0/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="<%=contextPath%>/style/standard/css/eccrm-common-new.css">
-    <link rel="stylesheet" type="text/css" href="<%=contextPath%>/vendor/zTree/css/ztree.css">
     <script type="text/javascript" src="<%=contextPath%>/static/ycrl/javascript/jquery-all.js"></script>
     <script type="text/javascript" src="<%=contextPath%>/static/ycrl/javascript/angular-all.js"></script>
     <script type="text/javascript" src="<%=contextPath%>/static/ycrl/javascript/angular-strap-all.js"></script>
     <script type="text/javascript" src="<%=contextPath%>/static/ycrl/javascript/angular-upload.js"></script>
-    <script type="text/javascript" src="<%=contextPath%>/vendor/kindeditor-4.1.10/kindeditor-min.js" charset="utf-8" ></script>
-    <script type="text/javascript" src="<%=contextPath%>/vendor/kindeditor-4.1.10/lang/zh_CN.js" charset="utf-8" ></script>
     <script type="text/javascript">
         window.angular.contextPathURL = "<%=contextPath%>";
     </script>
 </head>
 <body>
-<div class="main" ng-app="oa.knowledge.edit" ng-controller="Ctrl">
+<div class="main" ng-app="oa.knowledge.tech" ng-controller="Ctrl">
     <div class="block">
         <div class="block-header">
                 <span class="header-text">
@@ -49,9 +46,6 @@
                             <span class="glyphicons claw_hammer"></span> 更新
                         </button>
                     </c:if>
-                    <a type="button" class="btn btn-green btn-min" ng-click="back();">
-                        <span class="glyphicons message_forward"></span> 返回
-                    </a>
                 </span>
         </div>
         <div class="block-content">
@@ -69,36 +63,19 @@
                                validate validate-required validate-max-length="100"/>
 
                     </div>
-                    <div class="row">
-                        <div class="form-label col-1-half">
-                            <label >内容:</label>
+                    <div class="row" eccrm-upload="uploadOptions" style="padding-left: 10%;" ng-cloak></div>
+                    <div class="row" style="margin:15px 10px;border: 1px solid #dcdcdc;" ng-cloak>
+                        <div bindonce ng-repeat="at in attachments"
+                             style="float:left;height: 50px;margin:10px 25px;cursor: pointer;">
+                            <img ng-src="<%=contextPath%>/style/standard/images/icons/{{at.fileRealType}}.png"
+                                 alt="{{at.fileName}}"/>
+                            <a ng-click="downloadAttachment(at.id);" bo-text="at.fileName" title="点击下载"></a>
+                            <i class="icons fork cp" ng-if="pageType!='detail'"
+                               ng-click="removeAttachment(at.id,$index);" title="移除文件"></i>
                         </div>
-                        <textarea class="col-10-half" id="content" rows="15" name="content"></textarea>
                     </div>
-                    <div class="row">
-                        <div class="form-label col-1-half">
-                            <label validate-error="form.keywords">关键字:</label>
-                        </div>
-                        <input class="col-10-half" type="text" ng-model="beans.keywords" name="keywords"
-                               placeholder="多个关键字请使用逗号分隔..."
-                               validate validate-required validate-max-length="100"/>
-                    </div>
-                    <div class="row" eccrm-upload="uploadOptions"></div>
-                    <div class="row">
-                        <div class="form-label col-1-half">
-                            <label validate-error="form.url">外部链接:</label>
-                        </div>
-                        <input class="col-6-half" type="text" ng-model="beans.url" name="url"
-                               validate validate-max-length="1000"/>
-                    </div>
-                    <div class="row">
-                        <div class="form-label col-1-half">
-                            <label validate-error="form.status">状态:</label>
-                        </div>
-                        <select ng-model="beans.status" class="col-2-half" name="status"
-                                ng-options="foo.value as foo.name for foo in status"
-                                validate validate-required>
-                        </select>
+                    <div class="row text-right" ng-cloak style="padding: 0px 15px;">
+                        <span>共 {{attachments.length||0}} 个文件</span>
                     </div>
                 </form>
             </div>
@@ -107,5 +84,5 @@
 </div>
 </body>
 <script type="text/javascript" src="<%=contextPath%>/app/oa/knowledge/knowledge.js"></script>
-<script type="text/javascript" src="<%=contextPath%>/app/oa/knowledge/edit/knowledge_edit.js"></script>
+<script type="text/javascript" src="<%=contextPath%>/app/oa/knowledge/edit/knowledge_edit_tech.js"></script>
 </html>

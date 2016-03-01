@@ -6,7 +6,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>海航OA协同办公系统</title>
+    <title>雄图协同办公系统</title>
     <link rel="stylesheet" href="<%=contextPath%>/vendor/bootstrap-v3.0/css/bootstrap.min.css"/>
     <link rel="stylesheet" href="<%=contextPath%>/style/standard/css/eccrm-common-new.css"/>
     <link rel="stylesheet" href="<%=contextPath%>/app/main/css/main.css"/>
@@ -24,7 +24,11 @@
     <input type="hidden" id="contextPath" value="<%=contextPath%>/"/>
     <div id="header">
         <div class="top">
-            <div class="logo"></div>
+            <div>
+                <img style="position: relative;top:-6px;left:5px;" src="<%=contextPath%>/app/main/images/logo2.png"
+                     alt="logo" height="60" width="60"/>
+                <span style="color: #fff;font-size: 26px;height: 60px;line-height: 60px;"> | 雄图协同办公系统</span>
+            </div>
             <div class="tool" style="width: 100px;">
                 <a href="<%=contextPath%>/logout">
                     <img src="<%=contextPath%>/app/main/images/icon/h13.png" width="24" height="24" title="退出">

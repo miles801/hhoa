@@ -816,7 +816,6 @@ div.panel {
     background: url("../images/grid_header90.png") repeat-x center;
 }
 
-
 .block .panel.panel-table thead.table-header {
     border: 0;
 }
@@ -1660,6 +1659,40 @@ button.aui_state_highlight:active {
 
 .icons.left2 {
     background-position: -60px -40px;
+}
+
+.icons2 {
+    width: 36px;
+    height: 50px;
+    background-repeat: no-repeat;
+}
+
+.icons2.file {
+    background: url("../images/icons/file.png");
+}
+
+.icons2.doc {
+    background: url("../images/icons/doc.png");
+}
+
+.icons2.img {
+    background: url("../images/icons/jpg.png");
+}
+
+.icons2.pdf {
+    background: url("../images/icons/pdf.png");
+}
+
+.icons2.txt {
+    background: url("../images/icons/txt.png");
+}
+
+.icons2.excel {
+    background: url("../images/icons/xls.png");
+}
+
+.icons2.ppt {
+    background: url("../images/icons/ppt.png");
 }
 
 .pr {

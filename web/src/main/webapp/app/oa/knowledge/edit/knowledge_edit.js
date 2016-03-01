@@ -14,6 +14,7 @@
         var id = $('#id').val();
 
         var defaults = {
+            type: 'business',    // 业务系统
             status: 'ACTIVE'
         };
         // 富文本编辑器
@@ -24,12 +25,6 @@
             viewLink: true,
             maxFile: 10
         };
-
-        // 知识类型
-        KnowledgeParam.type(function (data) {
-            $scope.types = data || [];
-            $scope.types.unshift({name: '请选择'});
-        });
 
         // 状态
         KnowledgeParam.status(function (data) {
