@@ -150,8 +150,9 @@
     <div>
         <div class="ta-c kn-search">
             <div class="search-logo">
-                <img src="<%=contextPath%>/app/main/images/logo.png"/>
-                <span>黑户查询</span>
+                <span style="padding-left: 100px;">
+                    <img src="<%=contextPath%>/app/main/images/logo3.png" width="50" height="50"/> 黑户搜索
+                </span>
             </div>
             <span class="searchbox">
                 <input type="text" id="keywordsOrTitle" ng-model="keywords" size="20">
