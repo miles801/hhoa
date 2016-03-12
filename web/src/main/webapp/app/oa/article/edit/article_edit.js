@@ -21,15 +21,12 @@
         var editor = KindEditor.create('#navPageContent');
 
         // 保存
-        $scope.save = function (createNew) {
+        $scope.save = function () {
             $scope.beans.content = editor.html();
+            $scope.form.$setValidity('committed', false);
             var promise = ArticleService.save($scope.beans, function (data) {
-                if (data && data['success'] == true) { //保存成功
-                    CommonUtils.addTab('update');
-                    CommonUtils.back();
-                } else {
-                    AlertFactory.saveError($scope, data);
-                }
+                CommonUtils.addTab('update');
+                CommonUtils.back();
             });
             CommonUtils.loading(promise, '保存中...');
         };
@@ -40,11 +37,8 @@
         $scope.update = function () {
             $scope.beans.content = editor.html();
             var promise = ArticleService.update($scope.beans, function (data) {
-                if (data && data['success'] == true) { // 更新成功
-                    CommonUtils.addTab('update');
-                    CommonUtils.back();
-                }
-                AlertFactory.updateError($scope, data);
+                CommonUtils.addTab('update');
+                CommonUtils.back();
             });
             CommonUtils.loading(promise, '更新中...');
         };
