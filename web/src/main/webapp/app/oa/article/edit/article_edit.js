@@ -17,13 +17,23 @@
         ArticleParam.status(function (data) {
             $scope.status = data;
         });
+
+        var attachmentIds = [];
         // 初始化富文本编辑器
-        var editor = KindEditor.create('#navPageContent');
+        var editor = KindEditor.create('#navPageContent', {
+            uploadJson: CommonUtils.contextPathURL('/attachment/upload2?dataType=jsp'),
+            afterUpload: function (url, obj) {
+                $scope.$apply(function () {
+                    attachmentIds.push(obj.id)
+                });
+            }
+        });
 
         // 保存
         $scope.save = function () {
             $scope.beans.content = editor.html();
             $scope.form.$setValidity('committed', false);
+            $scope.beans.attachmentIds = attachmentIds.join(',');
             var promise = ArticleService.save($scope.beans, function (data) {
                 CommonUtils.addTab('update');
                 CommonUtils.back();
@@ -35,7 +45,9 @@
 
         // 更新
         $scope.update = function () {
+            $scope.form.$setValidity('committed', false);
             $scope.beans.content = editor.html();
+            $scope.beans.attachmentIds = attachmentIds.join(',');
             var promise = ArticleService.update($scope.beans, function (data) {
                 CommonUtils.addTab('update');
                 CommonUtils.back();
@@ -44,10 +56,11 @@
         };
 
         // 加载数据
-        $scope.load = function (id) {
+        $scope.load = function (id, callback) {
             var promise = ArticleService.get({id: id}, function (data) {
                 $scope.beans = data.data || {};
                 editor.html($scope.beans.content || '');
+                angular.isFunction(callback) && callback();
             });
             CommonUtils.loading(promise, 'Loading...');
         };
@@ -69,8 +82,11 @@
         $scope.options = {
             maxFile: 50,
             bid: id,
-            onSuccess: function () {
-                $scope.beans.attachmentIds = $scope.options.getAttachment().join(',');
+            swfOption: {
+                fileTypeDesc: '图片'
+            },
+            onSuccess: function (att) {
+                attachmentIds.push(att.id)
             }
         };
 
@@ -99,10 +115,11 @@
         } else if (pageType == 'modify') {
             $scope.load(id);
         } else if (pageType == 'detail') {
-            $scope.load(id);
             $scope.options.readonly = true;
-            editor.readonly(true);
-            $('input,textarea,select').attr('disabled', 'disabled');
+            $scope.load(id, function () {
+                $('input,textarea,select').attr('disabled', 'disabled');
+                editor.readonly(true);
+            });
         } else {
             AlertFactory.error($scope, '错误的页面类型');
         }

@@ -121,7 +121,7 @@ public class AttachmentCtrl {
     @ResponseBody
     @SuppressWarnings(value = {"unchecked"})
     public void upload2(@RequestParam(required = false) String dataType,
-                        MultipartHttpServletRequest request, HttpServletResponse response) {
+                        MultipartHttpServletRequest request, HttpServletResponse response) throws IOException {
         Iterator<String> itr = request.getFileNames();
 
         List<Attachment> attaList = new ArrayList<Attachment>();
@@ -173,6 +173,17 @@ public class AttachmentCtrl {
                 response.setContentType("xml/html");
             } else if ("json".equals(dataType)) {
                 response.setContentType("json/application");
+            } else if ("jsp".equals(dataType)) {
+                // 此处为定制化代码，为KindEditor定制
+                response.setContentType("text/html");
+                JsonObject o = new JsonObject();
+                o.addProperty("error", 0);
+                Attachment attachment = attaList.get(0);
+                o.addProperty("id", attachment.getId());
+                o.addProperty("name", attachment.getFileName());
+                o.addProperty("url", request.getContextPath() + "/attachment/download?id=" + attachment.getId());
+                response.getWriter().print(GsonUtils.toJson(o));
+                return;
             }
         } else {
             response.setContentType("json/application");
