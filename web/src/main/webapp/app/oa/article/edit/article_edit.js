@@ -21,7 +21,7 @@
         var attachmentIds = [];
         // 初始化富文本编辑器
         var editor = KindEditor.create('#navPageContent', {
-            uploadJson: CommonUtils.contextPathURL('/attachment/upload2?dataType=jsp'),
+            uploadJson: CommonUtils.contextPathURL('/attachment/upload2?dataType=jsp&thumb=true&width=800&height=500'),
             afterUpload: function (url, obj) {
                 $scope.$apply(function () {
                     attachmentIds.push(obj.id)

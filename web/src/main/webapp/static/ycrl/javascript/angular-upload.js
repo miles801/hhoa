@@ -91,7 +91,10 @@ UploadOption.prototype = {
     maxFile: 100,        // 允许上传的最大文件数
     bid: null,           // 业务ID，用于回显
     btype: null,         // 业务类型，在上传和回显时需要
-
+    thumbWidth: 60,        // 缩略图宽度
+    thumbHeight: 80,       // 缩略图高度
+    thumb: false,            // 是否启用缩略图
+    showUrl: false,
     /**
      * 初始化成功后要可执行的函数，this为当前配置对象
      */
@@ -281,6 +284,18 @@ SWFOption.prototype = {
                                 })
                         });
                     };
+
+                    scope.showImage = function (id, name) {
+                        art.dialog({
+                            lock: true,
+                            title: name,
+                            width: 600,
+                            height: 400,
+                            opacity: 0.87,	// 透明度
+                            content: '<img style="height: 100%;width: 100%;" src="' + CommonUtils.contextPathURL('/attachment/download?id=' + id) + '" alt="' + name + '"/>',
+                            cancel: true
+                        });
+                    };
                     // 初始化插件
                     var init = function () {
                         // 修改标识位，表示已经初始化过一次
@@ -358,15 +373,23 @@ SWFOption.prototype = {
                                     $http.get(url).success(function (data) {
                                         data = data.data || [];
                                         angular.forEach(data, function (o) {
+                                            var end = o.fileName.substr(o.fileName.lastIndexOf('.') + 1);
+                                            if ("jpg|JPG|png|PNG|jpeg|gif|bmp".indexOf(end) > -1) {
+                                                o.isImage = true;
+                                            }
                                             scope.attachments.push(o);
                                         });
                                     });
                                 }
                                 scope.options = options;
+                                var url = CommonUtils.contextPathURL('/attachment/upload2');
+                                if (options.thumb === true) {
+                                    url += '?thumb=' + options.thumb + '&width=' + options.thumbWidth + '&height=' + options.thumbHeight
+                                }
                                 options.swfOption = angular.extend(new SWFOption(), cfg.swfOption, {
                                     swf: uploadifySwfPath,
                                     formData: {businessType: btype},
-                                    uploader: CommonUtils.contextPathURL('/attachment/upload2'),
+                                    uploader: url,
                                     onUploadSuccess: function (file, data, response) {
                                         var obj = $.parseJSON(data);
                                         if (!(angular.isArray(obj) && obj.length > 0)) {
@@ -376,13 +399,17 @@ SWFOption.prototype = {
 
                                         // 获得附件信息
                                         scope.$apply(function () {
-                                            scope.attachments.push(obj[0]);
-                                            // 第三方回调
-                                            if (angular.isFunction(options.onSuccess)) {
-                                                options.onSuccess(obj[0]);
+                                            var end = obj[0].fileName.substr(obj[0].fileName.lastIndexOf('.') + 1);
+                                            if ("jpg|JPG|png|PNG|jpeg|gif|bmp".indexOf(end) > -1) {
+                                                obj[0].isImage = true;
                                             }
+                                            scope.attachments.push(obj[0]);
                                         });
 
+                                        // 第三方回调
+                                        if (angular.isFunction(options.onSuccess)) {
+                                            options.onSuccess(obj[0]);
+                                        }
                                     },
                                     onInit: function (instance) {
                                     }
