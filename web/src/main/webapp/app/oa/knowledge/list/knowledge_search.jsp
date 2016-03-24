@@ -157,9 +157,15 @@
         <span>很抱歉，没有找到与“<span class="error">{{errorContent}}</span>”相关的知识。</span>
     </div>
     <div class="box" ng-cloak ng-repeat="bean in beans.data">
-        <a ng-click="view(bean.id)" class="title" ng-bind="bean.title"></a>
+        <span style="margin: 0 8px;">{{$index+1}}. </span><a ng-click="view(bean.id)" class="title"
+                                                             ng-bind="bean.title"></a>
 
         <div class="content" ng-bind-html="html(bean.content)"></div>
+    </div>
+    <div ng-cloak ng-show="pager.currentPage<pager.totalPage"
+         style="text-align: center; height: 40px; line-height: 40px; font-weight: 700; margin: 50px auto; border: 1px solid #dcdcdc; background-color: #E2E2E2; width: 800px; cursor: pointer;">
+        <a ng-click="loadMore()" style="display: block;" class="btn-blue">加载更多 ({{pager.currentPage}} /
+            {{pager.totalPage}})</a>
     </div>
 </div>
 
